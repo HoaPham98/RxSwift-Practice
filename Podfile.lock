@@ -1,0 +1,117 @@
+PODS:
+  - Alamofire (4.9.1)
+  - Differentiator (4.0.1)
+  - MagicalRecord (2.3.2):
+    - MagicalRecord/Core (= 2.3.2)
+  - MagicalRecord/Core (2.3.2)
+  - MBProgressHUD (1.2.0)
+  - MGAPIService (2.1.0):
+    - ObjectMapper (~> 3.5)
+    - RxAlamofire (~> 5.0)
+    - RxSwift (~> 5.0)
+  - MGArchitecture (1.2.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - MGLoadMore (1.2.0):
+    - MJRefresh (~> 3.2)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - MJRefresh (3.4.3)
+  - "NSObject+Rx (5.0.2)":
+    - RxSwift (~> 5.0)
+  - ObjectMapper (3.5.1)
+  - OrderedSet (5.0.0)
+  - Reusable (4.1.1):
+    - Reusable/Storyboard (= 4.1.1)
+    - Reusable/View (= 4.1.1)
+  - Reusable/Storyboard (4.1.1)
+  - Reusable/View (4.1.1)
+  - RxAlamofire (5.1.0):
+    - RxAlamofire/Core (= 5.1.0)
+  - RxAlamofire/Core (5.1.0):
+    - Alamofire (~> 4.8)
+    - RxSwift (~> 5.0)
+  - RxCocoa (5.0.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxRelay (5.0.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.1)
+  - SDWebImage (5.7.4):
+    - SDWebImage/Core (= 5.7.4)
+  - SDWebImage/Core (5.7.4)
+  - SwiftLint (0.39.2)
+  - Then (2.6.0)
+  - Validator (3.2.1)
+
+DEPENDENCIES:
+  - MagicalRecord
+  - MBProgressHUD
+  - MGAPIService
+  - MGArchitecture
+  - MGLoadMore
+  - MJRefresh
+  - "NSObject+Rx"
+  - ObjectMapper
+  - OrderedSet
+  - Reusable
+  - RxDataSources
+  - SDWebImage
+  - SwiftLint
+  - Then
+  - Validator
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Differentiator
+    - MagicalRecord
+    - MBProgressHUD
+    - MGAPIService
+    - MGArchitecture
+    - MGLoadMore
+    - MJRefresh
+    - "NSObject+Rx"
+    - ObjectMapper
+    - OrderedSet
+    - Reusable
+    - RxAlamofire
+    - RxCocoa
+    - RxDataSources
+    - RxRelay
+    - RxSwift
+    - SDWebImage
+    - SwiftLint
+    - Then
+    - Validator
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  MGAPIService: f08855c2af6f7a92adb90ea39894062be025c9b9
+  MGArchitecture: fd31de59df23dc4c15b3a3974ebe3aeb358b043d
+  MGLoadMore: 0ba683eb54696fcbdb440339fc4870e0f70bedcb
+  MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
+  "NSObject+Rx": 2eb2cf51fd1c554118449a7fbc36e4cd620b9e94
+  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  SDWebImage: 48b88379b798fd1e4298f95bb25d2cdabbf4deb3
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
+  Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
+  Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
+
+PODFILE CHECKSUM: 636f18042302a2a44a24e8bc6b9a03cd4793654f
+
+COCOAPODS: 1.9.0
