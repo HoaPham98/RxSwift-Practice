@@ -9,13 +9,23 @@
 /* Begin PBXBuildFile section */
 		405BD2C424B41DA600DD0DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2C324B41DA600DD0DC6 /* AppDelegate.swift */; };
 		405BD2C624B41DA600DD0DC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2C524B41DA600DD0DC6 /* SceneDelegate.swift */; };
-		405BD2C824B41DA600DD0DC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2C724B41DA600DD0DC6 /* ViewController.swift */; };
 		405BD2CB24B41DA600DD0DC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BD2C924B41DA600DD0DC6 /* Main.storyboard */; };
 		405BD2CE24B41DA600DD0DC6 /* Delicious.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2CC24B41DA600DD0DC6 /* Delicious.xcdatamodeld */; };
 		405BD2D024B41DAD00DD0DC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 405BD2CF24B41DAD00DD0DC6 /* Assets.xcassets */; };
 		405BD2D324B41DAD00DD0DC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BD2D124B41DAD00DD0DC6 /* LaunchScreen.storyboard */; };
 		405BD30024B432A400DD0DC6 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2FF24B432A400DD0DC6 /* URLs.swift */; };
 		405BD30224B432D800DD0DC6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30124B432D800DD0DC6 /* Constants.swift */; };
+		405BD30524B44C9C00DD0DC6 /* APIServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30424B44C9C00DD0DC6 /* APIServices.swift */; };
+		405BD30F24B44D1B00DD0DC6 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30924B44D1B00DD0DC6 /* ErrorResponse.swift */; };
+		405BD31024B44D1B00DD0DC6 /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30A24B44D1B00DD0DC6 /* BaseError.swift */; };
+		405BD31124B44D1B00DD0DC6 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30B24B44D1B00DD0DC6 /* HTTPStatusCode.swift */; };
+		405BD31224B44D1B00DD0DC6 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */; };
+		405BD31624B44F2A00DD0DC6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD31524B44F2A00DD0DC6 /* APIKey.swift */; };
+		405BD31824B4513B00DD0DC6 /* CustomRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */; };
+		40DB927424B558EE00AAB0FF /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927124B558EE00AAB0FF /* AppViewModel.swift */; };
+		40DB927524B558EE00AAB0FF /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927224B558EE00AAB0FF /* AppNavigator.swift */; };
+		40DB927624B558EE00AAB0FF /* AppUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927324B558EE00AAB0FF /* AppUseCase.swift */; };
+		40DB928224B55DAB00AAB0FF /* AppTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB928124B55DAB00AAB0FF /* AppTabbarController.swift */; };
 		FE8B56241927EF31470A2CDE /* Pods_Delicious.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B01D209F13892EEFE0F752 /* Pods_Delicious.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,7 +34,6 @@
 		405BD2C024B41DA600DD0DC6 /* Delicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		405BD2C324B41DA600DD0DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		405BD2C524B41DA600DD0DC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		405BD2C724B41DA600DD0DC6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		405BD2CA24B41DA600DD0DC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		405BD2CD24B41DA600DD0DC6 /* Delicious.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Delicious.xcdatamodel; sourceTree = "<group>"; };
 		405BD2CF24B41DAD00DD0DC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -32,6 +41,17 @@
 		405BD2D424B41DAD00DD0DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		405BD2FF24B432A400DD0DC6 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		405BD30124B432D800DD0DC6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		405BD30424B44C9C00DD0DC6 /* APIServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServices.swift; sourceTree = "<group>"; };
+		405BD30924B44D1B00DD0DC6 /* ErrorResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		405BD30A24B44D1B00DD0DC6 /* BaseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
+		405BD30B24B44D1B00DD0DC6 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
+		405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
+		405BD31524B44F2A00DD0DC6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRequestAdapter.swift; sourceTree = "<group>"; };
+		40DB927124B558EE00AAB0FF /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		40DB927224B558EE00AAB0FF /* AppNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
+		40DB927324B558EE00AAB0FF /* AppUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUseCase.swift; sourceTree = "<group>"; };
+		40DB928124B55DAB00AAB0FF /* AppTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabbarController.swift; sourceTree = "<group>"; };
 		53B01D209F13892EEFE0F752 /* Pods_Delicious.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Delicious.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B704BD29DCFE618D669A7357 /* Pods-Delicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delicious.release.xcconfig"; path = "Target Support Files/Pods-Delicious/Pods-Delicious.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +166,7 @@
 			children = (
 				405BD2FF24B432A400DD0DC6 /* URLs.swift */,
 				405BD30124B432D800DD0DC6 /* Constants.swift */,
+				405BD31524B44F2A00DD0DC6 /* APIKey.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -162,6 +183,8 @@
 		405BD2E224B41F0000DD0DC6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				405BD30724B44CBF00DD0DC6 /* API */,
+				405BD30424B44C9C00DD0DC6 /* APIServices.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -190,9 +213,48 @@
 		405BD2E624B41F7800DD0DC6 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				405BD2C724B41DA600DD0DC6 /* ViewController.swift */,
+				40DB927224B558EE00AAB0FF /* AppNavigator.swift */,
+				40DB927324B558EE00AAB0FF /* AppUseCase.swift */,
+				40DB927124B558EE00AAB0FF /* AppViewModel.swift */,
+				40DB928124B55DAB00AAB0FF /* AppTabbarController.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		405BD30724B44CBF00DD0DC6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				405BD30824B44D1B00DD0DC6 /* Error */,
+				405BD30C24B44D1B00DD0DC6 /* Request */,
+				405BD30E24B44D1B00DD0DC6 /* Response */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		405BD30824B44D1B00DD0DC6 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				405BD30924B44D1B00DD0DC6 /* ErrorResponse.swift */,
+				405BD30A24B44D1B00DD0DC6 /* BaseError.swift */,
+				405BD30B24B44D1B00DD0DC6 /* HTTPStatusCode.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		405BD30C24B44D1B00DD0DC6 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */,
+				405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		405BD30E24B44D1B00DD0DC6 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		5DB3F2178B82C26092C2CE29 /* Pods */ = {
@@ -312,7 +374,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#if which swiftlint >/dev/null; then\n  # swiftlint\n#else\n # echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n# fi\n";
 		};
 		744EEFD340F4BC2BDAF482AC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -338,12 +400,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				405BD31124B44D1B00DD0DC6 /* HTTPStatusCode.swift in Sources */,
 				405BD30024B432A400DD0DC6 /* URLs.swift in Sources */,
-				405BD2C824B41DA600DD0DC6 /* ViewController.swift in Sources */,
+				40DB927424B558EE00AAB0FF /* AppViewModel.swift in Sources */,
+				40DB928224B55DAB00AAB0FF /* AppTabbarController.swift in Sources */,
 				405BD2C424B41DA600DD0DC6 /* AppDelegate.swift in Sources */,
+				40DB927624B558EE00AAB0FF /* AppUseCase.swift in Sources */,
 				405BD2C624B41DA600DD0DC6 /* SceneDelegate.swift in Sources */,
 				405BD2CE24B41DA600DD0DC6 /* Delicious.xcdatamodeld in Sources */,
+				405BD31224B44D1B00DD0DC6 /* BaseRequest.swift in Sources */,
+				40DB927524B558EE00AAB0FF /* AppNavigator.swift in Sources */,
+				405BD30524B44C9C00DD0DC6 /* APIServices.swift in Sources */,
 				405BD30224B432D800DD0DC6 /* Constants.swift in Sources */,
+				405BD31024B44D1B00DD0DC6 /* BaseError.swift in Sources */,
+				405BD31624B44F2A00DD0DC6 /* APIKey.swift in Sources */,
+				405BD31824B4513B00DD0DC6 /* CustomRequestAdapter.swift in Sources */,
+				405BD30F24B44D1B00DD0DC6 /* ErrorResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
