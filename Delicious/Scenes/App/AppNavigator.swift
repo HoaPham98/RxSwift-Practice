@@ -18,9 +18,22 @@ struct AppNavigator: AppNavigatorType {
     unowned let window: UIWindow
     
     func toMain() {
-        let viewController = AppTabbarController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let tabbar = UITabBarController()
+        tabbar.tabBar.isTranslucent = false
+        tabbar.tabBar.tintColor = .systemOrange
         
-        window.rootViewController = navigationController
+        // MARK: Home
+        let homeVC = HomeViewController.instantiate()
+        let navHome = UINavigationController(rootViewController: homeVC).then {
+            $0.tabBarItem = UITabBarItem(title: "Home", image: Icon.icHomeNormal, selectedImage: Icon.icHomeSelected)
+        }
+        let homeNavigator = HomeNavigator(navigationController: navHome)
+        let homeUseCase = HomeUseCase()
+        let homeViewModel = HomeViewModel(navigator: homeNavigator, useCase: homeUseCase)
+        homeVC.viewModel = homeViewModel
+        
+        tabbar.viewControllers = [navHome]
+        
+        window.rootViewController = tabbar
     }
 }

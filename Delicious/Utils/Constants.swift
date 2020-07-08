@@ -6,4 +6,12 @@
 //  Copyright © 2020 HoaPQ. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+enum Icon {
+    static let icHomeNormal = #imageLiteral(resourceName: "ic_home_grey")
+    static let icHomeSelected = #imageLiteral(resourceName: "ic_home_orange")
+    
+    static let icSearch = #imageLiteral(resourceName: "ic_search")
+    static let icBack = #imageLiteral(resourceName: "ic_arrow_back")
+}
