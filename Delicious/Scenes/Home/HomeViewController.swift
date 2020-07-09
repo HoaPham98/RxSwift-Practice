@@ -12,12 +12,16 @@ import RxCocoa
 import Then
 import NSObject_Rx
 import MGArchitecture
+import MGLoadMore
 import Reusable
 
 final class HomeViewController: UIViewController, BindableType {
-    @IBOutlet weak private var tableView: UITableView!
+    @IBOutlet weak private var tableView: RefreshTableView!
 
     var viewModel: HomeViewModel!
+
+    private var data = BehaviorRelay<HomeDataType?>(value: nil)
+    private let selectedCLTrigger = PublishSubject<RecipeInformation>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,11 +43,27 @@ final class HomeViewController: UIViewController, BindableType {
             $0.estimatedRowHeight = UITableView.automaticDimension
             $0.delegate = self
             $0.dataSource = self
+            $0.refreshFooter = nil
         }
     }
 
     func bindViewModel() {
+        let input = HomeViewModel.Input(
+            loadTrigger: Driver.just(()),
+            reloadTrigger: tableView.loadMoreTopTrigger,
+            selectTrigger: selectedCLTrigger.asDriverOnErrorJustComplete())
         
+        let output = viewModel.transform(input)
+        
+        output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
+        output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
+        output.error.drive(rx.error).disposed(by: rx.disposeBag)
+        output.selected.drive().disposed(by: rx.disposeBag)
+        output.data.drive(data).disposed(by: rx.disposeBag)
+
+        data.observeOn(MainScheduler.instance).subscribe { (event) in
+            self.tableView.reloadData()
+        }.disposed(by: rx.disposeBag)
     }
 }
 
@@ -53,11 +73,12 @@ extension HomeViewController: StoryboardSceneBased {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return data.value == nil ? 0 : 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : 10
+        guard let data = data.value else { return 0 }
+        return section == 0 ? 1 : data.lastest.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,30 +95,40 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 for: indexPath,
                 cellType: RecipeTBCell.self)
+            cell.setInfo(recipe: data.value!.lastest[indexPath.row])
             return cell
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 160 : UITableView.automaticDimension
+        return indexPath.section == 0 ? 172 : UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = HomeTableHeaderView.loadFromNib()
         header.setUp(title: section == 0 ? "FEATURED" : "LASTEST")
-        
+
         return header
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 { return }
+        selectedCLTrigger.onNext(data.value!.lastest[indexPath.row])
     }
 }
 
 //MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        if let data = data.value {
+            return data.featured.count
+        }
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: FeaturedCLCell.self)
+        cell.setInfo(with: data.value!.featured[indexPath.row])
         return cell
     }
 }
@@ -105,7 +136,7 @@ extension HomeViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        selectedCLTrigger.onNext(data.value!.featured[indexPath.row])
     }
 }
 

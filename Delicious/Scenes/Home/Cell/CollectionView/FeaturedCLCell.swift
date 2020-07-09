@@ -11,9 +11,23 @@ import Reusable
 
 final class FeaturedCLCell: UICollectionViewCell, NibReusable {
 
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        imageView.applyCornerRadius(radius: 24)
+    }
+    func setInfo(with recipe: RecipeInformation) {
+        imageView.sd_setImage(
+            with: URL(string: recipe.image),
+            placeholderImage: Icon.recipe_placeholder,
+            context: nil)
     }
 
 }

@@ -133,6 +133,14 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="categoryLabel" destination="5GE-hR-KBr" id="ZNQ-ra-76W"/>
+                <outlet property="difficultyLabel" destination="Hq9-hc-8dT" id="Ozb-Y1-egO"/>
+                <outlet property="recipeImage" destination="xc6-ri-YqH" id="Xaq-O2-FcG"/>
+                <outlet property="recipeNameLabel" destination="ugY-yV-LK4" id="a9f-WY-tzf"/>
+                <outlet property="servingLabel" destination="ATH-a5-Q3z" id="Axr-jl-VTj"/>
+                <outlet property="timeToCookLabel" destination="etq-2b-x48" id="hud-Zj-gNf"/>
+            </connections>
             <point key="canvasLocation" x="63.04347826086957" y="187.83482142857142"/>
         </tableViewCell>
     </objects>

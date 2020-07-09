@@ -14,4 +14,6 @@ enum Icon {
     
     static let icSearch = #imageLiteral(resourceName: "ic_search")
     static let icBack = #imageLiteral(resourceName: "ic_arrow_back")
+    
+    static let recipe_placeholder = #imageLiteral(resourceName: "recipe_placeholder")
 }

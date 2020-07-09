@@ -30,7 +30,7 @@ struct AppNavigator: AppNavigatorType {
         let homeNavigator = HomeNavigator(navigationController: navHome)
         let homeUseCase = HomeUseCase()
         let homeViewModel = HomeViewModel(navigator: homeNavigator, useCase: homeUseCase)
-        homeVC.viewModel = homeViewModel
+        homeVC.bindViewModel(to: homeViewModel)
         
         tabbar.viewControllers = [navHome]
         

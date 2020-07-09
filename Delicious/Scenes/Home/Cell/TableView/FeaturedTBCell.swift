@@ -8,6 +8,8 @@
 
 import UIKit
 import Reusable
+import RxSwift
+import RxCocoa
 
 final class FeaturedTBCell: UITableViewCell, NibReusable {
 
