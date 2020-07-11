@@ -23,10 +23,11 @@ final class FeaturedCLCell: UICollectionViewCell, NibReusable {
         
         imageView.applyCornerRadius(radius: 24)
     }
+    
     func setInfo(with recipe: RecipeInformation) {
         imageView.sd_setImage(
             with: URL(string: recipe.image),
-            placeholderImage: Icon.recipe_placeholder,
+            placeholderImage: Icon.recipePlaceHolder,
             context: nil)
     }
 

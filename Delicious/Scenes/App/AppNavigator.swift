@@ -24,7 +24,7 @@ struct AppNavigator: AppNavigatorType {
         
         // MARK: Home
         let homeVC = HomeViewController.instantiate()
-        let navHome = UINavigationController(rootViewController: homeVC).then {
+        let navHome = CustomNavigationController(rootViewController: homeVC).then {
             $0.tabBarItem = UITabBarItem(title: "Home", image: Icon.icHomeNormal, selectedImage: Icon.icHomeSelected)
         }
         let homeNavigator = HomeNavigator(navigationController: navHome)

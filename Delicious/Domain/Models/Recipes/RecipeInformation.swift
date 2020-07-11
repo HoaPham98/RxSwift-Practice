@@ -45,6 +45,10 @@ struct RecipeInformation: Mappable {
 	var instructions = ""
 	var analyzedInstructions = [AnalyzedInstructions]()
 	var originalId = ""
+    
+    init() {
+        
+    }
 
 	init?(map: Map) {
 

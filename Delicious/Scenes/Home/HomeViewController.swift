@@ -33,7 +33,6 @@ final class HomeViewController: UIViewController, BindableType {
 
     func configView() {
         navigationItem.title = "Delicous"
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     func configTableView() {
@@ -49,7 +48,7 @@ final class HomeViewController: UIViewController, BindableType {
 
     func bindViewModel() {
         let input = HomeViewModel.Input(
-            loadTrigger: Driver.just(()),
+            loadTrigger: Driver.of(),
             reloadTrigger: tableView.loadMoreTopTrigger,
             selectTrigger: selectedCLTrigger.asDriverOnErrorJustComplete())
         
@@ -64,6 +63,8 @@ final class HomeViewController: UIViewController, BindableType {
         data.observeOn(MainScheduler.instance).subscribe { (event) in
             self.tableView.reloadData()
         }.disposed(by: rx.disposeBag)
+        
+        selectedCLTrigger.onNext(RecipeInformation())
     }
 }
 
@@ -100,8 +101,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 172 : UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 38
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -117,7 +118,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: - UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let data = data.value {
@@ -133,14 +134,14 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
-//MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedCLTrigger.onNext(data.value!.featured[indexPath.row])
     }
 }
 
-//MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

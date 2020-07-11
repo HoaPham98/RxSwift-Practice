@@ -1,18 +1,18 @@
 //
 //  RecipeOpenTableHeaderView.swift
-//  RECIPES
+//  Delicious
 //
-//  Created by Chidi Emeh on 12/29/17.
-//  Copyright © 2017 Chilly Bean. All rights reserved.
+//  Created by HoaPQ on 7/9/20.
+//  Copyright © 2020 HoaPQ. All rights reserved.
 //
 
 import UIKit
+import Reusable
 
-final class RecipeOpenTableHeaderView: UIView {
+final class RecipeOpenTableHeaderView: UIView, NibLoadable {
 
   //UI Properties
     @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var backgroundView: UIView!
     
     
     /*

@@ -17,7 +17,13 @@ struct HomeNavigator: HomeNavigatorType {
     unowned let navigationController: UINavigationController
     
     func toInfomation(id: Int) {
-        // TODO: Go to Infomation Screen
+        let recipeInfoVC = RecipeInfoViewController.instantiate()
+        let navigator = RecipeInfoNavigator()
+        let useCase = RecipeInfoUseCase()
+        let viewModel = RecipeInfoViewModel(navigator: navigator, useCase: useCase)
+        recipeInfoVC.bindViewModel(to: viewModel)
+        
+        navigationController.pushViewController(recipeInfoVC, animated: true)
     }
     
     func toSearch() {
