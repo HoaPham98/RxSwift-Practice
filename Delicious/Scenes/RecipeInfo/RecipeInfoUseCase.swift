@@ -6,12 +6,21 @@
 //  Copyright © 2020 HoaPQ. All rights reserved.
 //
 
-import Foundation
+import RxSwift
 
 protocol RecipeInfoUseCaseType {
-    
+    func getRecipe(id: Int) -> Observable<RecipeInformation>
+    func addToShopingList()
 }
 
 struct RecipeInfoUseCase: RecipeInfoUseCaseType {
+    func getRecipe(id: Int) -> Observable<RecipeInformation> {
+        let repository = HomeRepositoy()
+        let request = RecipeInfoRequest(id: id)
+        return repository.getRecipeInfomation(input: request)
+    }
     
+    func addToShopingList() {
+        
+    }
 }

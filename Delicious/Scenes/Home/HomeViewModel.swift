@@ -9,11 +9,7 @@
 import RxSwift
 import RxCocoa
 import MGArchitecture
-
-struct HomeDataType {
-    let featured: [RecipeInformation]
-    let lastest: [RecipeInformation]
-}
+import RxDataSources
 
 struct HomeViewModel {
     let navigator: HomeNavigatorType
@@ -24,11 +20,11 @@ extension HomeViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
-        let selectTrigger: Driver<RecipeInformation>
+        let selectTrigger: Driver<RecipeInformation?>
     }
 
     struct Output {
-        let data: Driver<HomeDataType>
+        let data: Driver<[HomeTableViewSection]>
         let isLoading: Driver<Bool>
         let isReloading: Driver<Bool>
         let error: Driver<Error>
@@ -44,12 +40,15 @@ extension HomeViewModel: ViewModelType {
                 return self.useCase.getRecipes().trackError(error)
         }
         
-        let recipe = getRecipes.item.map { (recipes) -> HomeDataType in
+        let recipe = getRecipes.item.map { (recipes) -> [HomeTableViewSection] in
             let data = recipes.split()
-            return HomeDataType(featured: data.left, lastest: data.right)
+            let featuredSection = HomeTableViewSection.featuredSection(items: [.featuredItem(items: data.left)])
+            let lastestSection = HomeTableViewSection.lastestSection(items: data.right.map { HomeTableViewItem.lastestItem(item: $0) })
+            return [featuredSection, lastestSection]
         }
 
         let selected = input.selectTrigger.do(onNext: { recipe in
+            guard let recipe = recipe else { return }
             self.navigator.toInfomation(id: recipe.id)
         })
         .mapToVoid()

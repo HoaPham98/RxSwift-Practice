@@ -18,7 +18,7 @@ import SnapKit
 
 final class RecipeInfoViewController: UIViewController, BindableType {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: RefreshTableView!
     @IBOutlet weak var navigationBackground: UIView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerTopConstraint: NSLayoutConstraint!
@@ -26,8 +26,9 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     var viewModel: RecipeInfoViewModel!
     
     private var recipeId: Int = 0
+    
+    private var navigationBarHeight: CGFloat = (Helpers.statusBarSize?.height ?? 0) + 44
     private var headerHeight: CGFloat = 150
-    private var navigationBarHeight: CGFloat = 0
     private var isFavorite: Bool = false
     
     override func viewDidLoad() {
@@ -54,13 +55,14 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     }
     
     func configViews() {
-//        navigationBarHeight = UIApplication.shared.statusBarFrame.height + 44
+        headerHeight = headerHeightConstraint.constant + navigationBarHeight
         tableView.do {
             $0.register(cellType: IngredientTBCell.self)
             $0.register(cellType: StepTBCell.self)
+            $0.refreshFooter = nil
             $0.dataSource = self
             $0.delegate = self
-            $0.contentInset = UIEdgeInsets(top: 88, left: 0, bottom: 0, right: 0)
+            $0.contentInset = UIEdgeInsets(top: navigationBarHeight, left: 0, bottom: 0, right: 0)
         }
  
         view.bringSubviewToFront(navigationBackground)
@@ -71,6 +73,19 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     }
     
     func bindViewModel() {
+        let input = RecipeInfoViewModel.Input(
+            loadTrigger: Driver.just(()),
+            reloadTrigger: tableView.loadMoreTopTrigger,
+            addToShoppingListTrigger: Driver.of())
+        
+        let output = viewModel.transform(input)
+        
+        output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
+        output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
+        output.error.drive(rx.error).disposed(by: rx.disposeBag)
+        output.isReloading.drive(onNext: { (status) in
+            print(status)
+        }, onCompleted: nil, onDisposed: nil)
     }
     
     @IBAction func tapFavorite(_ sender: Any) {
@@ -101,6 +116,9 @@ extension RecipeInfoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = SegmentHeaderView.loadFromNib()
         header.setUp(titles: ["Nutritions", "Ingredients", "Instructions"])
+        header.segmentControl.rx.selectedSegmentIndex.subscribe {
+            print($0)
+        }.disposed(by: rx.disposeBag)
         return header
     }
     
@@ -110,21 +128,22 @@ extension RecipeInfoViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
-        let base = navigationBarHeight
-        let navBarOffset = navigationBarHeight + offset
-        let imageBottom = base + headerHeight
+        let base = -navigationBarHeight
         if offset < base {
             headerTopConstraint.constant = offset
             headerHeightConstraint.constant = headerHeight + abs(base - offset)
         } else {
-            if navBarOffset > imageBottom {
+            let navBarOffset = navigationBarHeight + offset
+            let imageBottom = base + headerHeight
+            
+            if navBarOffset >= imageBottom {
                 headerTopConstraint.constant = base + abs(navBarOffset - imageBottom)
             } else {
                 headerTopConstraint.constant = base
             }
             headerHeightConstraint.constant = headerHeight
         }
-        let alpha = offset / (headerHeight - 88)
+        let alpha = offset / (headerHeight - navigationBarHeight*2)
         if alpha < 1 {
             navigationBackground.alpha = alpha
         } else {

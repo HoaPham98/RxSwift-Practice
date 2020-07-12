@@ -6,7 +6,7 @@
 //  Copyright © 2020 HoaPQ. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum Helpers {
     static func timeToDificulty(with time: Int) -> String {
@@ -18,4 +18,6 @@ enum Helpers {
             return "Hard"
         }
     }
+    
+    static var statusBarSize: CGSize?
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		40140C9624B9B5C0000F0CEA /* RecipeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40140C9524B9B5C0000F0CEA /* RecipeHeaderView.xib */; };
 		40140C9824B9B5CE000F0CEA /* RecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40140C9724B9B5CE000F0CEA /* RecipeHeaderView.swift */; };
+		4017636F24BB058600697F06 /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4017636E24BB058600697F06 /* HomeDataSource.swift */; };
 		40293A9624B6AF070002B93F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293A9524B6AF070002B93F /* UIView+.swift */; };
 		40293A9A24B6B4980002B93F /* RecipeInfoNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293A9924B6B4980002B93F /* RecipeInfoNavigator.swift */; };
 		40293A9C24B6B4A60002B93F /* RecipeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293A9B24B6B4A60002B93F /* RecipeInfoUseCase.swift */; };
@@ -22,6 +23,10 @@
 		40293AAD24B6C1E00002B93F /* IngredientTBCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40293AAB24B6C1E00002B93F /* IngredientTBCell.xib */; };
 		40293AB024B6C1FA0002B93F /* StepTBCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293AAE24B6C1FA0002B93F /* StepTBCell.swift */; };
 		40293AB124B6C1FA0002B93F /* StepTBCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40293AAF24B6C1FA0002B93F /* StepTBCell.xib */; };
+		402FEFBE24BB4173000CE25C /* MBSegmentControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402FEFBD24BB4173000CE25C /* MBSegmentControl+Rx.swift */; };
+		402FEFC124BB4DDB000CE25C /* response.json in Resources */ = {isa = PBXBuildFile; fileRef = 402FEFBF24BB4DDB000CE25C /* response.json */; };
+		402FEFC224BB4DDB000CE25C /* response-2.json in Resources */ = {isa = PBXBuildFile; fileRef = 402FEFC024BB4DDB000CE25C /* response-2.json */; };
+		402FEFC424BB59CC000CE25C /* RecipeInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402FEFC324BB59CC000CE25C /* RecipeInfoRequest.swift */; };
 		4046010824B953B500A89861 /* SegmentHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4046010724B953B500A89861 /* SegmentHeaderView.xib */; };
 		4046010A24B953CA00A89861 /* SegmentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4046010924B953CA00A89861 /* SegmentHeaderView.swift */; };
 		4046013024B96B2C00A89861 /* MBSegments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4046012E24B96B2C00A89861 /* MBSegments.swift */; };
@@ -91,6 +96,7 @@
 		3F0158B3D8C1582F93A537A4 /* Pods-Delicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delicious.debug.xcconfig"; path = "Target Support Files/Pods-Delicious/Pods-Delicious.debug.xcconfig"; sourceTree = "<group>"; };
 		40140C9524B9B5C0000F0CEA /* RecipeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeHeaderView.xib; sourceTree = "<group>"; };
 		40140C9724B9B5CE000F0CEA /* RecipeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHeaderView.swift; sourceTree = "<group>"; };
+		4017636E24BB058600697F06 /* HomeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
 		40293A9524B6AF070002B93F /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		40293A9924B6B4980002B93F /* RecipeInfoNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoNavigator.swift; sourceTree = "<group>"; };
 		40293A9B24B6B4A60002B93F /* RecipeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoUseCase.swift; sourceTree = "<group>"; };
@@ -104,6 +110,10 @@
 		40293AAB24B6C1E00002B93F /* IngredientTBCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngredientTBCell.xib; sourceTree = "<group>"; };
 		40293AAE24B6C1FA0002B93F /* StepTBCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTBCell.swift; sourceTree = "<group>"; };
 		40293AAF24B6C1FA0002B93F /* StepTBCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepTBCell.xib; sourceTree = "<group>"; };
+		402FEFBD24BB4173000CE25C /* MBSegmentControl+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MBSegmentControl+Rx.swift"; sourceTree = "<group>"; };
+		402FEFBF24BB4DDB000CE25C /* response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = response.json; sourceTree = "<group>"; };
+		402FEFC024BB4DDB000CE25C /* response-2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "response-2.json"; sourceTree = "<group>"; };
+		402FEFC324BB59CC000CE25C /* RecipeInfoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoRequest.swift; sourceTree = "<group>"; };
 		4046010724B953B500A89861 /* SegmentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SegmentHeaderView.xib; sourceTree = "<group>"; };
 		4046010924B953CA00A89861 /* SegmentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentHeaderView.swift; sourceTree = "<group>"; };
 		4046012E24B96B2C00A89861 /* MBSegments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSegments.swift; sourceTree = "<group>"; };
@@ -297,6 +307,7 @@
 				40DB92D324B5B50F00AAB0FF /* Array+.swift */,
 				40293A9524B6AF070002B93F /* UIView+.swift */,
 				4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */,
+				402FEFBD24BB4173000CE25C /* MBSegmentControl+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -314,6 +325,8 @@
 		405BD2DE24B41EB800DD0DC6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				402FEFC024BB4DDB000CE25C /* response-2.json */,
+				402FEFBF24BB4DDB000CE25C /* response.json */,
 				405BD2CF24B41DAD00DD0DC6 /* Assets.xcassets */,
 				405BD2CC24B41DA600DD0DC6 /* Delicious.xcdatamodeld */,
 			);
@@ -429,6 +442,7 @@
 				405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */,
 				405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */,
 				40DB92CD24B5AFB100AAB0FF /* HomeRequest.swift */,
+				402FEFC324BB59CC000CE25C /* RecipeInfoRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -449,6 +463,7 @@
 				40DB929424B5647D00AAB0FF /* HomeUseCase.swift */,
 				40DB929624B5648C00AAB0FF /* HomeViewModel.swift */,
 				40DB929824B5649900AAB0FF /* HomeViewController.swift */,
+				4017636E24BB058600697F06 /* HomeDataSource.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -581,12 +596,14 @@
 				40DB929024B5642400AAB0FF /* Categories.storyboard in Resources */,
 				40DB92AF24B5925100AAB0FF /* HomeTableHeaderView.xib in Resources */,
 				40293AA224B6B56A0002B93F /* RecipeInfo.storyboard in Resources */,
+				402FEFC124BB4DDB000CE25C /* response.json in Resources */,
 				40DB92AA24B591B700AAB0FF /* RecipeOpenTableHeaderView.xib in Resources */,
 				40293AB124B6C1FA0002B93F /* StepTBCell.xib in Resources */,
 				40293AA924B6C16E0002B93F /* RecipeInfoTBCell.xib in Resources */,
 				40DB928D24B5640200AAB0FF /* ShoppingList.storyboard in Resources */,
 				405BD2D024B41DAD00DD0DC6 /* Assets.xcassets in Resources */,
 				40DB929E24B5789100AAB0FF /* FeaturedTBCell.xib in Resources */,
+				402FEFC224BB4DDB000CE25C /* response-2.json in Resources */,
 				40DB928E24B5640200AAB0FF /* Search.storyboard in Resources */,
 				40DB928A24B5640200AAB0FF /* Favorite.storyboard in Resources */,
 				405BD2CB24B41DA600DD0DC6 /* Main.storyboard in Resources */,
@@ -662,9 +679,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				402FEFBE24BB4173000CE25C /* MBSegmentControl+Rx.swift in Sources */,
 				405BD31124B44D1B00DD0DC6 /* HTTPStatusCode.swift in Sources */,
 				4046010A24B953CA00A89861 /* SegmentHeaderView.swift in Sources */,
 				405BD30024B432A400DD0DC6 /* URLs.swift in Sources */,
+				402FEFC424BB59CC000CE25C /* RecipeInfoRequest.swift in Sources */,
 				40DB92D124B5B46E00AAB0FF /* UIViewController+.swift in Sources */,
 				4046013124B96B2C00A89861 /* MBSegmentControl.swift in Sources */,
 				40293AA824B6C16E0002B93F /* RecipeInfoTBCell.swift in Sources */,
@@ -706,6 +725,7 @@
 				40DB92D224B5B46E00AAB0FF /* UIViewController+Rx.swift in Sources */,
 				40DB928B24B5640200AAB0FF /* StoryBoards.swift in Sources */,
 				40293AB024B6C1FA0002B93F /* StepTBCell.swift in Sources */,
+				4017636F24BB058600697F06 /* HomeDataSource.swift in Sources */,
 				40DB92C324B5A00500AAB0FF /* CaloricBreakdown.swift in Sources */,
 				40293A9E24B6B4B20002B93F /* RecipeInfoViewModel.swift in Sources */,
 				40293AA024B6B4C00002B93F /* RecipeInfoViewController.swift in Sources */,

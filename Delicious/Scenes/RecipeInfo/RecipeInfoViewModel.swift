@@ -17,14 +17,27 @@ struct RecipeInfoViewModel {
 
 extension RecipeInfoViewModel: ViewModelType {
     struct Input {
-        
+        let loadTrigger: Driver<Void>
+        let reloadTrigger: Driver<Void>
+        let addToShoppingListTrigger: Driver<[Ingredients]>
     }
     
     struct Output {
-        
+        let data: Driver<RecipeInformation>
+        let isLoading: Driver<Bool>
+        let isReloading: Driver<Bool>
+        let error: Driver<Error>
     }
     
     func transform(_ input: RecipeInfoViewModel.Input) -> RecipeInfoViewModel.Output {
-        return Output()
+        let error = ErrorTracker()
+        let recipe = getItem(loadTrigger: input.loadTrigger, reloadTrigger: input.reloadTrigger) { _ in
+            return self.useCase.getRecipe(id: 0).trackError(error)
+        }
+        
+        return Output(data: recipe.item,
+                      isLoading: recipe.isLoading,
+                      isReloading: recipe.isReloading,
+                      error: error.asDriver())
     }
 }

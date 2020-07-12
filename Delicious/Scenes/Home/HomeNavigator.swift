@@ -18,6 +18,7 @@ struct HomeNavigator: HomeNavigatorType {
     
     func toInfomation(id: Int) {
         let recipeInfoVC = RecipeInfoViewController.instantiate()
+        recipeInfoVC.setUpData(id: id)
         let navigator = RecipeInfoNavigator()
         let useCase = RecipeInfoUseCase()
         let viewModel = RecipeInfoViewModel(navigator: navigator, useCase: useCase)
