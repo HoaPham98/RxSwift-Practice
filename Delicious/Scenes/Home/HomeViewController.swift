@@ -60,7 +60,7 @@ final class HomeViewController: UIViewController, BindableType {
         output.selected.drive().disposed(by: rx.disposeBag)
         output.data.drive(data).disposed(by: rx.disposeBag)
 
-        data.observeOn(MainScheduler.instance).subscribe { (event) in
+        data.observeOn(MainScheduler.instance).subscribe { _ in
             self.tableView.reloadData()
         }.disposed(by: rx.disposeBag)
         
@@ -144,8 +144,8 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height: CGFloat = 160
         let width = height / 393 * 636
         return CGSize(width: width, height: height)

@@ -41,7 +41,7 @@ extension HomeViewModel: ViewModelType {
         let getRecipes = getItem(
             loadTrigger: input.loadTrigger,
             reloadTrigger: input.reloadTrigger) { _ in
-            return self.useCase.getRecipes().trackError(error)
+                return self.useCase.getRecipes().trackError(error)
         }
         
         let recipe = getRecipes.item.map { (recipes) -> HomeDataType in

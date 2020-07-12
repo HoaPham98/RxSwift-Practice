@@ -29,5 +29,7 @@ target 'Delicious' do
     # UI
     pod 'MBProgressHUD'
     pod 'SDWebImage'
+    pod 'SnapKit'
+#    pod 'MBSegmentControl', :git => 'https://github.com/HoaPham98/MBSegmentControl.git'
 
 end

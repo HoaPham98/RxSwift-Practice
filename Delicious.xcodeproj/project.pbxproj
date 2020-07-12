@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40140C9624B9B5C0000F0CEA /* RecipeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40140C9524B9B5C0000F0CEA /* RecipeHeaderView.xib */; };
+		40140C9824B9B5CE000F0CEA /* RecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40140C9724B9B5CE000F0CEA /* RecipeHeaderView.swift */; };
 		40293A9624B6AF070002B93F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293A9524B6AF070002B93F /* UIView+.swift */; };
 		40293A9A24B6B4980002B93F /* RecipeInfoNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293A9924B6B4980002B93F /* RecipeInfoNavigator.swift */; };
 		40293A9C24B6B4A60002B93F /* RecipeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293A9B24B6B4A60002B93F /* RecipeInfoUseCase.swift */; };
@@ -20,6 +22,10 @@
 		40293AAD24B6C1E00002B93F /* IngredientTBCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40293AAB24B6C1E00002B93F /* IngredientTBCell.xib */; };
 		40293AB024B6C1FA0002B93F /* StepTBCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40293AAE24B6C1FA0002B93F /* StepTBCell.swift */; };
 		40293AB124B6C1FA0002B93F /* StepTBCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40293AAF24B6C1FA0002B93F /* StepTBCell.xib */; };
+		4046010824B953B500A89861 /* SegmentHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4046010724B953B500A89861 /* SegmentHeaderView.xib */; };
+		4046010A24B953CA00A89861 /* SegmentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4046010924B953CA00A89861 /* SegmentHeaderView.swift */; };
+		4046013024B96B2C00A89861 /* MBSegments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4046012E24B96B2C00A89861 /* MBSegments.swift */; };
+		4046013124B96B2C00A89861 /* MBSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4046012F24B96B2C00A89861 /* MBSegmentControl.swift */; };
 		405BD2C424B41DA600DD0DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2C324B41DA600DD0DC6 /* AppDelegate.swift */; };
 		405BD2C624B41DA600DD0DC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD2C524B41DA600DD0DC6 /* SceneDelegate.swift */; };
 		405BD2CB24B41DA600DD0DC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 405BD2C924B41DA600DD0DC6 /* Main.storyboard */; };
@@ -35,6 +41,7 @@
 		405BD31224B44D1B00DD0DC6 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */; };
 		405BD31624B44F2A00DD0DC6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD31524B44F2A00DD0DC6 /* APIKey.swift */; };
 		405BD31824B4513B00DD0DC6 /* CustomRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */; };
+		4063E1FB24B985FE00DF3FC8 /* UINavigationBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */; };
 		40DB927424B558EE00AAB0FF /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927124B558EE00AAB0FF /* AppViewModel.swift */; };
 		40DB927524B558EE00AAB0FF /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927224B558EE00AAB0FF /* AppNavigator.swift */; };
 		40DB927624B558EE00AAB0FF /* AppUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927324B558EE00AAB0FF /* AppUseCase.swift */; };
@@ -82,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		3F0158B3D8C1582F93A537A4 /* Pods-Delicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delicious.debug.xcconfig"; path = "Target Support Files/Pods-Delicious/Pods-Delicious.debug.xcconfig"; sourceTree = "<group>"; };
+		40140C9524B9B5C0000F0CEA /* RecipeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeHeaderView.xib; sourceTree = "<group>"; };
+		40140C9724B9B5CE000F0CEA /* RecipeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHeaderView.swift; sourceTree = "<group>"; };
 		40293A9524B6AF070002B93F /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		40293A9924B6B4980002B93F /* RecipeInfoNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoNavigator.swift; sourceTree = "<group>"; };
 		40293A9B24B6B4A60002B93F /* RecipeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoUseCase.swift; sourceTree = "<group>"; };
@@ -95,6 +104,10 @@
 		40293AAB24B6C1E00002B93F /* IngredientTBCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngredientTBCell.xib; sourceTree = "<group>"; };
 		40293AAE24B6C1FA0002B93F /* StepTBCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTBCell.swift; sourceTree = "<group>"; };
 		40293AAF24B6C1FA0002B93F /* StepTBCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepTBCell.xib; sourceTree = "<group>"; };
+		4046010724B953B500A89861 /* SegmentHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SegmentHeaderView.xib; sourceTree = "<group>"; };
+		4046010924B953CA00A89861 /* SegmentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentHeaderView.swift; sourceTree = "<group>"; };
+		4046012E24B96B2C00A89861 /* MBSegments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSegments.swift; sourceTree = "<group>"; };
+		4046012F24B96B2C00A89861 /* MBSegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSegmentControl.swift; sourceTree = "<group>"; };
 		405BD2C024B41DA600DD0DC6 /* Delicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		405BD2C324B41DA600DD0DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		405BD2C524B41DA600DD0DC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +125,7 @@
 		405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
 		405BD31524B44F2A00DD0DC6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRequestAdapter.swift; sourceTree = "<group>"; };
+		4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+.swift"; sourceTree = "<group>"; };
 		40DB927124B558EE00AAB0FF /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		40DB927224B558EE00AAB0FF /* AppNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
 		40DB927324B558EE00AAB0FF /* AppUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUseCase.swift; sourceTree = "<group>"; };
@@ -208,8 +222,21 @@
 				40293AAF24B6C1FA0002B93F /* StepTBCell.xib */,
 				40DB92A924B591B700AAB0FF /* RecipeOpenTableHeaderView.swift */,
 				40DB92A824B591B700AAB0FF /* RecipeOpenTableHeaderView.xib */,
+				4046010724B953B500A89861 /* SegmentHeaderView.xib */,
+				4046010924B953CA00A89861 /* SegmentHeaderView.swift */,
+				40140C9524B9B5C0000F0CEA /* RecipeHeaderView.xib */,
+				40140C9724B9B5CE000F0CEA /* RecipeHeaderView.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		4046012D24B96B2200A89861 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				4046012F24B96B2C00A89861 /* MBSegmentControl.swift */,
+				4046012E24B96B2C00A89861 /* MBSegments.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		405BD2B724B41DA600DD0DC6 = {
@@ -269,6 +296,7 @@
 				40DB92D024B5B46E00AAB0FF /* UIViewController+Rx.swift */,
 				40DB92D324B5B50F00AAB0FF /* Array+.swift */,
 				40293A9524B6AF070002B93F /* UIView+.swift */,
+				4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -307,6 +335,7 @@
 		405BD2E024B41EC900DD0DC6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4046012D24B96B2200A89861 /* New Group */,
 				405BD2FF24B432A400DD0DC6 /* URLs.swift */,
 				405BD30124B432D800DD0DC6 /* Constants.swift */,
 				405BD31524B44F2A00DD0DC6 /* APIKey.swift */,
@@ -561,6 +590,8 @@
 				40DB928E24B5640200AAB0FF /* Search.storyboard in Resources */,
 				40DB928A24B5640200AAB0FF /* Favorite.storyboard in Resources */,
 				405BD2CB24B41DA600DD0DC6 /* Main.storyboard in Resources */,
+				40140C9624B9B5C0000F0CEA /* RecipeHeaderView.xib in Resources */,
+				4046010824B953B500A89861 /* SegmentHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,7 +636,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  # swiftlint\n  echo \"hello\"\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		744EEFD340F4BC2BDAF482AC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -632,8 +663,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				405BD31124B44D1B00DD0DC6 /* HTTPStatusCode.swift in Sources */,
+				4046010A24B953CA00A89861 /* SegmentHeaderView.swift in Sources */,
 				405BD30024B432A400DD0DC6 /* URLs.swift in Sources */,
 				40DB92D124B5B46E00AAB0FF /* UIViewController+.swift in Sources */,
+				4046013124B96B2C00A89861 /* MBSegmentControl.swift in Sources */,
 				40293AA824B6C16E0002B93F /* RecipeInfoTBCell.swift in Sources */,
 				40DB927424B558EE00AAB0FF /* AppViewModel.swift in Sources */,
 				40DB929724B5648C00AAB0FF /* HomeViewModel.swift in Sources */,
@@ -647,12 +680,15 @@
 				40DB927624B558EE00AAB0FF /* AppUseCase.swift in Sources */,
 				405BD2C624B41DA600DD0DC6 /* SceneDelegate.swift in Sources */,
 				40DB92C024B5A00500AAB0FF /* Nutrients.swift in Sources */,
+				4063E1FB24B985FE00DF3FC8 /* UINavigationBar+.swift in Sources */,
 				40DB92D824B5B76800AAB0FF /* HomeResponse.swift in Sources */,
 				405BD2CE24B41DA600DD0DC6 /* Delicious.xcdatamodeld in Sources */,
 				40293AA424B6BAA40002B93F /* CustomNavigationController.swift in Sources */,
 				40DB92DB24B5C92500AAB0FF /* Helpers.swift in Sources */,
+				40140C9824B9B5CE000F0CEA /* RecipeHeaderView.swift in Sources */,
 				40DB92CE24B5AFB100AAB0FF /* HomeRequest.swift in Sources */,
 				405BD31224B44D1B00DD0DC6 /* BaseRequest.swift in Sources */,
+				4046013024B96B2C00A89861 /* MBSegments.swift in Sources */,
 				40DB92D424B5B50F00AAB0FF /* Array+.swift in Sources */,
 				40DB92A524B578EB00AAB0FF /* RecipeTBCell.swift in Sources */,
 				40DB92AE24B5925000AAB0FF /* HomeTableHeaderView.swift in Sources */,

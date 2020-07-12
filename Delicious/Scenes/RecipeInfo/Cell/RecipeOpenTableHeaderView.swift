@@ -14,13 +14,7 @@ final class RecipeOpenTableHeaderView: UIView, NibLoadable {
   //UI Properties
     @IBOutlet weak var headerLabel: UILabel!
     
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    func setUp(title: String) {
+        headerLabel.text = title
     }
-    */
-
 }

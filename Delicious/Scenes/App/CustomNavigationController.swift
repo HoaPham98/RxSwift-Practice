@@ -23,13 +23,14 @@ class CustomNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        delegate = self
         changeTitleColor()
         changeBackIcon()
         changeNavigationColor()
     }
     
     func changeTitleColor() {
-        navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationBar.titleTextAttributes = [.font: UIFont(name: "Avenir Book", size: 20), .foregroundColor: UIColor.white]
     }
     
     func changeBackIcon() {
@@ -38,9 +39,17 @@ class CustomNavigationController: UINavigationController {
         barAppearance.backIndicatorImage = Icon.icBack
         barAppearance.backIndicatorTransitionMaskImage = Icon.icBack
         barAppearance.tintColor = .white
+        barAppearance.shadowImage = UIImage()
     }
 
     func changeNavigationColor() {
         navigationBar.barTintColor = .systemOrange
+    }
+}
+
+extension CustomNavigationController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        let item = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        viewController.navigationItem.backBarButtonItem = item
     }
 }

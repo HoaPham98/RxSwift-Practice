@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Reusable
 
-class StepTBCell: UITableViewCell {
+class StepTBCell: UITableViewCell, NibReusable {
 
     override func awakeFromNib() {
         super.awakeFromNib()

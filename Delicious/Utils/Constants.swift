@@ -17,3 +17,7 @@ enum Icon {
     
     static let recipePlaceHolder = #imageLiteral(resourceName: "recipe_placeholder")
 }
+
+enum Constant {
+    static let topOffset = UIApplication.shared.windows.first{ $0.isKeyWindow }?.safeAreaInsets.top
+}

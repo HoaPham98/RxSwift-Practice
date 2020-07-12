@@ -44,6 +44,7 @@ PODS:
   - SDWebImage (5.7.4):
     - SDWebImage/Core (= 5.7.4)
   - SDWebImage/Core (5.7.4)
+  - SnapKit (5.0.1)
   - Then (2.6.0)
   - Validator (3.2.1)
 
@@ -60,6 +61,7 @@ DEPENDENCIES:
   - Reusable
   - RxDataSources
   - SDWebImage
+  - SnapKit
   - Then
   - Validator
 
@@ -83,6 +85,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SDWebImage
+    - SnapKit
     - Then
     - Validator
 
@@ -105,9 +108,10 @@ SPEC CHECKSUMS:
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SDWebImage: 48b88379b798fd1e4298f95bb25d2cdabbf4deb3
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: 62f9d7e2773fc2d2effac6fc39fe6e986960465b
+PODFILE CHECKSUM: bd94f8108d879caddbb08c12dfcb5a352c59e69b
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.3
