@@ -20,4 +20,5 @@ enum Helpers {
     }
     
     static var statusBarSize: CGSize?
+    static var safeAreaInsets: UIEdgeInsets?
 }

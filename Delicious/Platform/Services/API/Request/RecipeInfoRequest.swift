@@ -9,7 +9,9 @@
 import Foundation
 
 class RecipeInfoRequest: BaseRequest {
+    var id: Int
     init(id: Int) {
+        self.id = id
         super.init(url: "")
     }
 }

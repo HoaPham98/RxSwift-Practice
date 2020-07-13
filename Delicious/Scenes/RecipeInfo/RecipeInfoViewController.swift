@@ -15,22 +15,43 @@ import MGArchitecture
 import MGLoadMore
 import Reusable
 import SnapKit
+import RxDataSources
+import RxAnimated
 
 final class RecipeInfoViewController: UIViewController, BindableType {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: HeaderTableView!
     @IBOutlet weak var navigationBackground: UIView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var refreshControl: RefreshControl!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
+    @IBOutlet weak var headerView: RecipeHeaderView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var addToShoppingButton: UIButton!
+    @IBOutlet weak var shoppingViewBottomConstraint: NSLayoutConstraint!
+    
+    private let segmentControl = MBSegmentControl().then {
+        var settings = MBSegmentStripSettings()
+        settings.stripRange = .segment
+        
+        $0.selectedIndex = 0
+        $0.backgroundColor = .white
+        $0.style = .strip(settings)
+        $0.segments = ["Nutritions", "Ingredients", "Instructions"].map { TextSegment(text: $0) }
+    }
     
     var viewModel: RecipeInfoViewModel!
-    
-    private var recipeId: Int = 0
     
     private var navigationBarHeight: CGFloat = (Helpers.statusBarSize?.height ?? 0) + 44
     private var headerHeight: CGFloat = 150
     private var isFavorite: Bool = false
+    
+    private var isShoppingButtonHidden: Binder<Bool> {
+        return Binder(self) { (viewController, status) in
+            viewController.animateShoppingButton(status: status)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,31 +72,59 @@ final class RecipeInfoViewController: UIViewController, BindableType {
         }
     }
     
-    func setUpData(id: Int) {
-        recipeId = id
-    }
-    
     func configViews() {
         headerHeight = headerHeightConstraint.constant + navigationBarHeight
+        headerTopConstraint.constant = -navigationBarHeight
+        headerHeightConstraint.constant = headerHeight
         tableView.do {
+            $0.register(cellType: NutritionTBCell.self)
             $0.register(cellType: IngredientTBCell.self)
             $0.register(cellType: StepTBCell.self)
-            $0.dataSource = self
-            $0.delegate = self
-            $0.contentInset = UIEdgeInsets(top: navigationBarHeight, left: 0, bottom: 0, right: 0)
+            $0.tableHeaderView?.frame = CGRect(x: 0,
+                                               y: 0,
+                                               width: $0.width,
+                                               height: headerHeight - navigationBarHeight + 44)
+            $0.tableFooterView = UIView(frame: CGRect(x: 0,
+                                                      y: 0,
+                                                      width: tableView.width,
+                                                      height: .leastNonzeroMagnitude))
+            $0.contentInset = UIEdgeInsets(top: navigationBarHeight,
+                                           left: 0,
+                                           bottom: 0,
+                                           right: 0)
+            $0.rx.setDelegate(self).disposed(by: rx.disposeBag)
         }
         refreshControl.do {
             $0.setMaxHeightOfRefreshControl = headerHeight
             $0.scrollView = tableView
-//            $0.setOnRefreshing = {
-//                print("Refreshing...")
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-//                    self.refreshControl.endRefreshing()
-//                })
-//            }
         }
  
         view.bringSubviewToFront(navigationBackground)
+        view.addSubview(segmentControl)
+        segmentControl.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.height.equalTo(44)
+        }
+        
+        addToShoppingButton.do {
+            $0.applyCornerRadius(radius: 15)
+            $0.applyShadowWithColor(color: .black, opacity: 0.6, radius: 7)
+        }
+    }
+    
+    private func animateShoppingButton(status: Bool) {
+        if status {
+            shoppingViewBottomConstraint.constant = 16
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            shoppingViewBottomConstraint.constant = -150
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
+        }
     }
     
     private func configNavigationBar() {
@@ -84,59 +133,58 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     
     func bindViewModel() {
         
+        let dataSource = RxTableViewSectionedReloadDataSource<RecipeTableViewSection>(
+            configureCell: { (dataSource, tableView, indexPath, _) -> UITableViewCell in
+            switch dataSource[indexPath] {
+            case .nutrientItem(let item):
+                let cell = tableView.dequeueReusableCell(for: indexPath, cellType: NutritionTBCell.self)
+                cell.setData(data: item)
+                return cell
+            case .ingredientItem(let item):
+                let cell = tableView.dequeueReusableCell(for: indexPath, cellType: IngredientTBCell.self)
+                cell.setUp(data: item)
+                return cell
+            case .stepItem(let step):
+                let cell = tableView.dequeueReusableCell(for: indexPath, cellType: StepTBCell.self)
+                cell.setUp(data: step)
+                return cell
+            }
+        }, titleForHeaderInSection: { (section, index) in
+            switch section.sectionModels[index] {
+            case .stepItem:
+                return "Method \(index+1)"
+            default:
+                return ""
+            }
+        })
+        
         let input = RecipeInfoViewModel.Input(
             loadTrigger: Driver.just(()),
-            reloadTrigger: refreshControl.loadMoreTopTrigger,
-            addToShoppingListTrigger: Driver.of())
+            reloadTrigger: refreshControl.refreshTrigger,
+            favoriteTrigger: favoriteButton.rx.tap.asDriver(),
+            segmentTrigger: segmentControl.rx.selectedSegmentIndex.asDriver(),
+            addToShoppingListTrigger: addToShoppingButton.rx.tap.asDriver())
         
         let output = viewModel.transform(input)
         
         output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
-        output.isReloading.drive(refreshControl.isLoadingMoreTop).disposed(by: rx.disposeBag)
+        output.isReloading.drive(refreshControl.isRefreshing).disposed(by: rx.disposeBag)
         output.error.drive(rx.error).disposed(by: rx.disposeBag)
-        output.data.drive(onNext: { (recipe) in
-            print(recipe)
-        }, onCompleted: nil, onDisposed: nil)
+        output.recipe.drive(headerView.recipe).disposed(by: rx.disposeBag)
+        output.title.drive(titleLabel.rx.text).disposed(by: rx.disposeBag)
+        output.dataSource.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
+        output.shoppingButtonHidden.drive(isShoppingButtonHidden).disposed(by: rx.disposeBag)
     }
     
     @IBAction func tapFavorite(_ sender: Any) {
         guard let button = sender as? UIBarButtonItem else { return }
         isFavorite = !isFavorite
-        let image = isFavorite ? #imageLiteral(resourceName: "ic_favorites_grey") : #imageLiteral(resourceName: "ic_favorite")
+        let image = isFavorite ? Icon.icFavoriteSelected : Icon.icFavorite
         button.image = image
     }
 }
 
-extension RecipeInfoViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        default:
-            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: StepTBCell.self)
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = SegmentHeaderView.loadFromNib()
-        header.setUp(titles: ["Nutritions", "Ingredients", "Instructions"])
-        header.segmentControl.rx.selectedSegmentIndex.subscribe {
-            print($0)
-        }.disposed(by: rx.disposeBag)
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
-    }
-    
+extension RecipeInfoViewController: UITableViewDelegate {    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
         let base = -navigationBarHeight

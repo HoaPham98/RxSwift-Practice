@@ -47,7 +47,7 @@ struct HomeRepositoy: HomeRespositoryType {
                     let data = try String(contentsOfFile: path, encoding: .utf8)
                     if let response = HomeResponse(JSONString: data) {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                            observer.onNext(response.recipes[0])
+                            observer.onNext(response.recipes.first(where: { $0.id == input.id })!)
                             })
                     } else {
                         observer.onError(BaseError.networkError)

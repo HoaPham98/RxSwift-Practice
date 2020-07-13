@@ -9,18 +9,18 @@
 import UIKit
 
 protocol HomeNavigatorType {
-    func toInfomation(id: Int)
+    func toInfomation(recipe: RecipeType)
     func toSearch()
 }
 
 struct HomeNavigator: HomeNavigatorType {
     unowned let navigationController: UINavigationController
     
-    func toInfomation(id: Int) {
+    func toInfomation(recipe: RecipeType) {
         let recipeInfoVC = RecipeInfoViewController.instantiate()
         let navigator = RecipeInfoNavigator()
         let useCase = RecipeInfoUseCase()
-        let viewModel = RecipeInfoViewModel(navigator: navigator, useCase: useCase)
+        let viewModel = RecipeInfoViewModel(navigator: navigator, useCase: useCase, recipe: recipe)
         recipeInfoVC.bindViewModel(to: viewModel)
         
         navigationController.pushViewController(recipeInfoVC, animated: true)

@@ -4,6 +4,7 @@ PODS:
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
+  - MarqueeLabel (4.0.2)
   - MBProgressHUD (1.2.0)
   - MGAPIService (2.1.0):
     - ObjectMapper (~> 3.5)
@@ -31,6 +32,13 @@ PODS:
   - RxAlamofire/Core (5.1.0):
     - Alamofire (~> 4.8)
     - RxSwift (~> 5.0)
+  - RxAnimated (0.6.1):
+    - RxAnimated/Core (= 0.6.1)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxAnimated/Core (0.6.1):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -50,6 +58,7 @@ PODS:
 
 DEPENDENCIES:
   - MagicalRecord
+  - MarqueeLabel
   - MBProgressHUD
   - MGAPIService
   - MGArchitecture
@@ -59,6 +68,7 @@ DEPENDENCIES:
   - ObjectMapper
   - OrderedSet
   - Reusable
+  - RxAnimated
   - RxDataSources
   - SDWebImage
   - SnapKit
@@ -70,6 +80,7 @@ SPEC REPOS:
     - Alamofire
     - Differentiator
     - MagicalRecord
+    - MarqueeLabel
     - MBProgressHUD
     - MGAPIService
     - MGArchitecture
@@ -80,6 +91,7 @@ SPEC REPOS:
     - OrderedSet
     - Reusable
     - RxAlamofire
+    - RxAnimated
     - RxCocoa
     - RxDataSources
     - RxRelay
@@ -93,6 +105,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MGAPIService: f08855c2af6f7a92adb90ea39894062be025c9b9
   MGArchitecture: fd31de59df23dc4c15b3a3974ebe3aeb358b043d
@@ -103,6 +116,7 @@ SPEC CHECKSUMS:
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
+  RxAnimated: 0c7f4c2898c06aa069507813aa50a4d01cb52bce
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
@@ -112,6 +126,6 @@ SPEC CHECKSUMS:
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: bd94f8108d879caddbb08c12dfcb5a352c59e69b
+PODFILE CHECKSUM: bbd02dd5963e4aad0a68ffe79ec0e9230dcd247e
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.3

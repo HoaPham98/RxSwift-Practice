@@ -16,7 +16,7 @@ final class FeaturedTBCell: UITableViewCell, NibReusable {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var data = PublishSubject<[RecipeInformation]>()
+    private var data = PublishSubject<[RecipeType]>()
     
     var collectionViewOffset: CGFloat {
         get {
@@ -27,7 +27,7 @@ final class FeaturedTBCell: UITableViewCell, NibReusable {
         }
     }
     
-    var selectedRecipe: ((RecipeInformation) -> Void)?
+    var selectedRecipe: ((RecipeType) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,7 +52,7 @@ final class FeaturedTBCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setData(data: [RecipeInformation]) {
+    func setData(data: [RecipeType]) {
         self.data.onNext(data)
     }
 }

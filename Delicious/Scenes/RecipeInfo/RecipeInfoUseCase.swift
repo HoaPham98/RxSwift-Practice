@@ -11,6 +11,7 @@ import RxSwift
 protocol RecipeInfoUseCaseType {
     func getRecipe(id: Int) -> Observable<RecipeInformation>
     func addToShopingList()
+    func updateFavorite(recipe: RecipeType, status: Bool)
 }
 
 struct RecipeInfoUseCase: RecipeInfoUseCaseType {
@@ -21,6 +22,10 @@ struct RecipeInfoUseCase: RecipeInfoUseCaseType {
     }
     
     func addToShopingList() {
+        
+    }
+    
+    func updateFavorite(recipe: RecipeType, status: Bool) {
         
     }
 }

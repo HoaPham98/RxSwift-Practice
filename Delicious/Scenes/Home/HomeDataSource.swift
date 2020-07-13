@@ -9,8 +9,8 @@
 import RxDataSources
 
 enum HomeTableViewItem {
-    case featuredItem(items: [RecipeInformation])
-    case lastestItem(item: RecipeInformation)
+    case featuredItem(items: [RecipeType])
+    case lastestItem(item: RecipeType)
 }
 
 enum HomeTableViewSection {

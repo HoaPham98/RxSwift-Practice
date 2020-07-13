@@ -21,14 +21,13 @@ final class FeaturedCLCell: UICollectionViewCell, NibReusable {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        imageView.applyCornerRadius(radius: 24)
+        imageView.applyCornerRadius(radius: 15)
     }
     
-    func setInfo(with recipe: RecipeInformation) {
+    func setInfo(with recipe: RecipeType) {
         imageView.sd_setImage(
             with: URL(string: recipe.image),
             placeholderImage: Icon.recipePlaceHolder,
             context: nil)
     }
-
 }

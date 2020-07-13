@@ -12,6 +12,7 @@ import SDWebImage
 
 final class RecipeTBCell: UITableViewCell, NibReusable {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var timeToCookLabel: UILabel!
@@ -23,8 +24,14 @@ final class RecipeTBCell: UITableViewCell, NibReusable {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        containerView.applyCornerRadius(radius: 15)
+    }
 
-    func setInfo(recipe: RecipeInformation) {
+    func setInfo(recipe: RecipeType) {
         recipeImage.sd_setImage(with: URL(string: recipe.image), completed: nil)
         categoryLabel.text = recipe.creditsText
         recipeNameLabel.text = recipe.title
@@ -32,5 +39,4 @@ final class RecipeTBCell: UITableViewCell, NibReusable {
         difficultyLabel.text = Helpers.timeToDificulty(with: recipe.readyInMinutes)
         servingLabel.text = String(format: "%d people", recipe.servings)
     }
-    
 }

@@ -20,7 +20,7 @@ extension HomeViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
-        let selectTrigger: Driver<RecipeInformation?>
+        let selectTrigger: Driver<RecipeType?>
     }
 
     struct Output {
@@ -49,7 +49,7 @@ extension HomeViewModel: ViewModelType {
 
         let selected = input.selectTrigger.do(onNext: { recipe in
             guard let recipe = recipe else { return }
-            self.navigator.toInfomation(id: recipe.id)
+            self.navigator.toInfomation(recipe: recipe)
         })
         .mapToVoid()
 

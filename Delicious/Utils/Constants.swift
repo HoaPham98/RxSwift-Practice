@@ -16,8 +16,11 @@ enum Icon {
     static let icBack = #imageLiteral(resourceName: "ic_arrow_back")
     
     static let recipePlaceHolder = #imageLiteral(resourceName: "recipe_placeholder")
+    
+    static let icFavoriteSelected = #imageLiteral(resourceName: "ic_favorites_grey")
+    static let icFavorite = #imageLiteral(resourceName: "ic_favorite")
 }
 
 enum Constant {
-    static let topOffset = UIApplication.shared.windows.first{ $0.isKeyWindow }?.safeAreaInsets.top
+    
 }

@@ -6,28 +6,10 @@
 //  Copyright © 2020 HoaPQ. All rights reserved.
 //
 
-/******************************************************************
- -uses RxSwift and RxCocoa
- -add instance of this class to background of your scroll view
- 
- ******************************    points  ***********************************
-                
-        left top *                                      * right top
-                 |                                      |
-                 |                                      |
-                 |                                      |
-                 |                                      |
-     left bottom *                                      * right bottom
-                 ------------------ * -------------------
-                                middle bottom
- 
- ******************************************************************/
-
 import UIKit
 import RxCocoa
 import RxSwift
 
-/// add instance of this class to background of your scroll view. you can set size of refresh circle using "setRefreshCircleSize". you can set fillColor of refresh control using "setFillColor" , set Max Height Of Refresh Control using "setMaxHeightOfRefreshControl", set color of refresh circle using "setRefreshCircleColor",
 class RefreshControl: UIView {
 
     // MARK: - properties
@@ -58,11 +40,6 @@ class RefreshControl: UIView {
     }
 
     // MARK: - points on path of border
-    var leftTop = CGPoint()
-    var rightTop = CGPoint()
-    var leftBottom = CGPoint()
-    var rightBottom = CGPoint()
-    var midBottom = CGPoint()
 
     ///content offset of scroll view that  keeps updated according to scroll detected
     private var scrollViewContentYOffset: CGFloat = 0
@@ -73,9 +50,6 @@ class RefreshControl: UIView {
     /// y offset for middle bottom point
     private var middleBottomPointYOffset: CGFloat = 0
 
-    ///y offset for bottom edge points
-    private var edgeBottomPointYOffset: CGFloat = 0
-
     /// center point for circle
     private var centerForCircle: CGPoint = CGPoint(x: 0, y: 0)
 
@@ -85,11 +59,8 @@ class RefreshControl: UIView {
     ///maximum height of refresh control
     private var maxHeightOfRefreshControl: CGFloat = 170
 
-    ///size of refresh circle
-    private var refreshCircleSize: RefreshCircleSize = .medium
-
     ///called when user refresh is triggered
-    private var onRefreshing: () -> Void = {
+    private var _onRefreshing: () -> Void = {
         debugPrint("refresh triggerd. Implement setOnRefreshing of RefreshControl to call your own function.")
     }
     
@@ -103,17 +74,10 @@ class RefreshControl: UIView {
         }
     }
 
-    //set size of refresh circle
-    var setRefreshCircleSize: RefreshCircleSize = RefreshCircleSize.medium {
-        didSet {
-            refreshCircleSize = setRefreshCircleSize
-        }
-    }
-
     //set function to be called after refresh is triggerd
-    var setOnRefreshing: () -> Void = { } {
+    var onRefreshing: () -> Void = { } {
         didSet {
-            onRefreshing = setOnRefreshing
+            _onRefreshing = onRefreshing
         }
     }
 
@@ -122,7 +86,6 @@ class RefreshControl: UIView {
         didSet {
             guard let scrollView = scrollView else { return }
             initialInset = scrollView.contentInset.top
-            print(initialInset)
             addObserver(.contentOffset)
             addObserver(.panGesture)
         }
@@ -133,7 +96,7 @@ class RefreshControl: UIView {
     }
     
     // Rx
-    var isLoadingMoreTop: Binder<Bool> {
+    var isRefreshing: Binder<Bool> {
         return Binder(self) { (view, loading) in
             if loading {
                 
@@ -143,10 +106,10 @@ class RefreshControl: UIView {
         }
     }
     
-    private var _loadMoreTopTrigger = PublishSubject<Void>()
+    private var _refreshTrigger = PublishSubject<Void>()
     
-    var loadMoreTopTrigger: Driver<Void> {
-        return _loadMoreTopTrigger.asDriver(onErrorJustReturn: ())
+    var refreshTrigger: Driver<Void> {
+        return _refreshTrigger.asDriver(onErrorJustReturn: ())
     }
 
     // MARK: - initializer
@@ -197,17 +160,18 @@ class RefreshControl: UIView {
 
         case .panGesture:
             scrollView.panGestureRecognizer.rx.event.bind(onNext: { [weak self] panGesture in
-                self?.xPositionOfPan = panGesture.location(in: self?.containerScrollView).x
-                self?.setNeedsDisplay()
+                guard let `self` = self else { return }
+                self.xPositionOfPan = panGesture.location(in: self.containerScrollView).x
+                self.setNeedsDisplay()
 
                 switch panGesture.state {
                 case .cancelled, .failed, .ended:
-                    if (self?.scrollViewContentYOffset)! > (self?.thresholdDrag)! {
-                        self?.refreshingStatus = true
-                        self?.setNeedsDisplay()
-                        self?.indicator.startAnimating()
-                        self?.onRefreshing()
-                        self?._loadMoreTopTrigger.onNext(())
+                    if self.scrollViewContentYOffset > self.thresholdDrag {
+                        self.refreshingStatus = true
+                        self.setNeedsDisplay()
+                        self.indicator.startAnimating()
+                        self._onRefreshing()
+                        self._refreshTrigger.onNext(())
                     }
                 default:
                     break
@@ -218,37 +182,21 @@ class RefreshControl: UIView {
 
     // MARK: - calculation
     private func calculate(_ rect: CGRect) {
-
         guard scrollViewContentYOffset >= 0 else {
-            middleBottomPointYOffset = 0
-            edgeBottomPointYOffset = initialInset
+            middleBottomPointYOffset = initialInset
             return
-
         }
-
         if !refreshingStatus {
-            middleBottomPointYOffset = min(scrollViewContentYOffset, maxHeightOfRefreshControl)
-            edgeBottomPointYOffset = max((middleBottomPointYOffset - 20), 0) - initialInset
+            middleBottomPointYOffset = min(scrollViewContentYOffset, maxHeightOfRefreshControl) - 20 - initialInset
         } else {
             middleBottomPointYOffset = min(scrollViewContentYOffset, thresholdDrag)
-            edgeBottomPointYOffset = middleBottomPointYOffset
-
-            UIView.animate(withDuration: 0.35) {
-                self.containerScrollView?.contentInset.top = self.middleBottomPointYOffset
-            }
         }
-
-        centerForCircle = CGPoint(x: rect.midX, y: edgeBottomPointYOffset)
+        centerForCircle = CGPoint(x: rect.midX, y: middleBottomPointYOffset)
         indicator.frame = CGRect(x: centerForCircle.x, y: centerForCircle.y, width: 0, height: 0)
-
     }
 
     func endRefreshing() {
         indicator.stopAnimating()
-        UIView.animate(withDuration: 0.35, animations: {
-            self.containerScrollView?.contentInset.top = self.initialInset
-        }, completion: { _ in
-                self.refreshingStatus = false
-            })
+        refreshingStatus = false
     }
 }

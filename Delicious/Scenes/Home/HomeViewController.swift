@@ -21,7 +21,7 @@ final class HomeViewController: UIViewController, BindableType {
 
     var viewModel: HomeViewModel!
 
-    private let selectedCLTrigger = PublishSubject<RecipeInformation?>()
+    private let selectedCLTrigger = PublishSubject<RecipeType?>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ final class HomeViewController: UIViewController, BindableType {
     }
 
     func bindViewModel() {
-        let dataSource = RxTableViewSectionedReloadDataSource<HomeTableViewSection>(configureCell: { [weak self] (dataSource, tableView, indexPath, item) -> UITableViewCell in
+        let dataSource = RxTableViewSectionedReloadDataSource<HomeTableViewSection>(configureCell: { [weak self] (dataSource, tableView, indexPath, _) -> UITableViewCell in
             switch dataSource[indexPath] {
             case .featuredItem(let recipes):
                 let cell = tableView.dequeueReusableCell(
@@ -77,10 +77,15 @@ final class HomeViewController: UIViewController, BindableType {
         output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
         output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
         output.error.drive(rx.error).disposed(by: rx.disposeBag)
-        output.selected.drive().disposed(by: rx.disposeBag)
+        output.selected.drive(onNext: { [weak self] _ in
+            guard let `self` = self else { return }
+            if let selectedIndexpath = self.tableView.indexPathForSelectedRow {
+                self.tableView.deselectRow(at: selectedIndexpath, animated: true)
+            }
+        }, onCompleted: nil, onDisposed: nil).disposed(by: rx.disposeBag)
         output.data.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
 
-        tableView.rx.modelSelected(HomeTableViewItem.self).compactMap { (item) -> RecipeInformation? in
+        tableView.rx.modelSelected(HomeTableViewItem.self).compactMap { (item) -> RecipeType? in
             switch item {
             case .lastestItem(let recipe):
                 return recipe
@@ -88,8 +93,6 @@ final class HomeViewController: UIViewController, BindableType {
                 return nil
             }
         }.bind(to: selectedCLTrigger).disposed(by: rx.disposeBag)
-        
-//        selectedCLTrigger.onNext(RecipeInformation())
     }
 }
 
