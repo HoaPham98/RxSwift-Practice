@@ -46,7 +46,7 @@
 		405BD31224B44D1B00DD0DC6 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */; };
 		405BD31624B44F2A00DD0DC6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD31524B44F2A00DD0DC6 /* APIKey.swift */; };
 		405BD31824B4513B00DD0DC6 /* CustomRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */; };
-		4063E1FB24B985FE00DF3FC8 /* UINavigationBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */; };
+		4078AE3424BBE97F0060400D /* CustomRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4078AE3324BBE97F0060400D /* CustomRefreshControl.swift */; };
 		40DB927424B558EE00AAB0FF /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927124B558EE00AAB0FF /* AppViewModel.swift */; };
 		40DB927524B558EE00AAB0FF /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927224B558EE00AAB0FF /* AppNavigator.swift */; };
 		40DB927624B558EE00AAB0FF /* AppUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB927324B558EE00AAB0FF /* AppUseCase.swift */; };
@@ -135,7 +135,7 @@
 		405BD30D24B44D1B00DD0DC6 /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
 		405BD31524B44F2A00DD0DC6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		405BD31724B4513B00DD0DC6 /* CustomRequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRequestAdapter.swift; sourceTree = "<group>"; };
-		4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+.swift"; sourceTree = "<group>"; };
+		4078AE3324BBE97F0060400D /* CustomRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRefreshControl.swift; sourceTree = "<group>"; };
 		40DB927124B558EE00AAB0FF /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		40DB927224B558EE00AAB0FF /* AppNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
 		40DB927324B558EE00AAB0FF /* AppUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUseCase.swift; sourceTree = "<group>"; };
@@ -306,7 +306,6 @@
 				40DB92D024B5B46E00AAB0FF /* UIViewController+Rx.swift */,
 				40DB92D324B5B50F00AAB0FF /* Array+.swift */,
 				40293A9524B6AF070002B93F /* UIView+.swift */,
-				4063E1FA24B985FE00DF3FC8 /* UINavigationBar+.swift */,
 				402FEFBD24BB4173000CE25C /* MBSegmentControl+Rx.swift */,
 			);
 			path = Extensions;
@@ -353,6 +352,7 @@
 				405BD30124B432D800DD0DC6 /* Constants.swift */,
 				405BD31524B44F2A00DD0DC6 /* APIKey.swift */,
 				40DB92DA24B5C92500AAB0FF /* Helpers.swift */,
+				4078AE3324BBE97F0060400D /* CustomRefreshControl.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -653,7 +653,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  # swiftlint\n  echo \"hello\"\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\n  # echo \"hello\"\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		744EEFD340F4BC2BDAF482AC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -699,7 +699,6 @@
 				40DB927624B558EE00AAB0FF /* AppUseCase.swift in Sources */,
 				405BD2C624B41DA600DD0DC6 /* SceneDelegate.swift in Sources */,
 				40DB92C024B5A00500AAB0FF /* Nutrients.swift in Sources */,
-				4063E1FB24B985FE00DF3FC8 /* UINavigationBar+.swift in Sources */,
 				40DB92D824B5B76800AAB0FF /* HomeResponse.swift in Sources */,
 				405BD2CE24B41DA600DD0DC6 /* Delicious.xcdatamodeld in Sources */,
 				40293AA424B6BAA40002B93F /* CustomNavigationController.swift in Sources */,
@@ -725,6 +724,7 @@
 				40DB92D224B5B46E00AAB0FF /* UIViewController+Rx.swift in Sources */,
 				40DB928B24B5640200AAB0FF /* StoryBoards.swift in Sources */,
 				40293AB024B6C1FA0002B93F /* StepTBCell.swift in Sources */,
+				4078AE3424BBE97F0060400D /* CustomRefreshControl.swift in Sources */,
 				4017636F24BB058600697F06 /* HomeDataSource.swift in Sources */,
 				40DB92C324B5A00500AAB0FF /* CaloricBreakdown.swift in Sources */,
 				40293A9E24B6B4B20002B93F /* RecipeInfoViewModel.swift in Sources */,

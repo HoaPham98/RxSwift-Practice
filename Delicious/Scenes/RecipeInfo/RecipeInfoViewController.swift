@@ -18,10 +18,11 @@ import SnapKit
 
 final class RecipeInfoViewController: UIViewController, BindableType {
     
-    @IBOutlet weak var tableView: RefreshTableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBackground: UIView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var refreshControl: RefreshControl!
     
     var viewModel: RecipeInfoViewModel!
     
@@ -59,10 +60,19 @@ final class RecipeInfoViewController: UIViewController, BindableType {
         tableView.do {
             $0.register(cellType: IngredientTBCell.self)
             $0.register(cellType: StepTBCell.self)
-            $0.refreshFooter = nil
             $0.dataSource = self
             $0.delegate = self
             $0.contentInset = UIEdgeInsets(top: navigationBarHeight, left: 0, bottom: 0, right: 0)
+        }
+        refreshControl.do {
+            $0.setMaxHeightOfRefreshControl = headerHeight
+            $0.scrollView = tableView
+//            $0.setOnRefreshing = {
+//                print("Refreshing...")
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+//                    self.refreshControl.endRefreshing()
+//                })
+//            }
         }
  
         view.bringSubviewToFront(navigationBackground)
@@ -73,18 +83,19 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     }
     
     func bindViewModel() {
+        
         let input = RecipeInfoViewModel.Input(
             loadTrigger: Driver.just(()),
-            reloadTrigger: tableView.loadMoreTopTrigger,
+            reloadTrigger: refreshControl.loadMoreTopTrigger,
             addToShoppingListTrigger: Driver.of())
         
         let output = viewModel.transform(input)
         
         output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
-        output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
+        output.isReloading.drive(refreshControl.isLoadingMoreTop).disposed(by: rx.disposeBag)
         output.error.drive(rx.error).disposed(by: rx.disposeBag)
-        output.isReloading.drive(onNext: { (status) in
-            print(status)
+        output.data.drive(onNext: { (recipe) in
+            print(recipe)
         }, onCompleted: nil, onDisposed: nil)
     }
     
@@ -108,7 +119,7 @@ extension RecipeInfoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         default:
-            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: IngredientTBCell.self)
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: StepTBCell.self)
             return cell
         }
     }

@@ -17,7 +17,7 @@ struct HomeRepositoy: HomeRespositoryType {
     private let api = APIService.share
     
     func getHomeData(input: HomeRequest) -> Observable<[RecipeInformation]> {
-        return Observable<[RecipeInformation]>.create( { observer in
+        return Observable<[RecipeInformation]>.create { observer in
             if let path = Bundle.main.path(forResource: "response-2", ofType: "json") {
                 do {
                     let data = try String(contentsOfFile: path, encoding: .utf8)
@@ -33,7 +33,7 @@ struct HomeRepositoy: HomeRespositoryType {
                 observer.onError(BaseError.networkError)
             }
             return Disposables.create()
-        })
+        }
         
 //        return api.request(input: input).map { (response: HomeResponse) in
 //            return response.recipes
@@ -41,12 +41,14 @@ struct HomeRepositoy: HomeRespositoryType {
     }
     
     func getRecipeInfomation(input: RecipeInfoRequest) -> Observable<RecipeInformation> {
-        return Observable<RecipeInformation>.create( { observer in
+        return Observable<RecipeInformation>.create { observer in
             if let path = Bundle.main.path(forResource: "response-2", ofType: "json") {
                 do {
                     let data = try String(contentsOfFile: path, encoding: .utf8)
                     if let response = HomeResponse(JSONString: data) {
-                        observer.onNext(response.recipes[0])
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                            observer.onNext(response.recipes[0])
+                            })
                     } else {
                         observer.onError(BaseError.networkError)
                     }
@@ -57,6 +59,6 @@ struct HomeRepositoy: HomeRespositoryType {
                 observer.onError(BaseError.networkError)
             }
             return Disposables.create()
-        })
+        }
     }
 }
