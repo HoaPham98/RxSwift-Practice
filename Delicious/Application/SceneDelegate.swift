@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import MagicalRecord
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

@@ -11,6 +11,10 @@ import Reusable
 
 class NutritionTBCell: UITableViewCell, NibReusable {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var dailyNeedLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,6 +27,16 @@ class NutritionTBCell: UITableViewCell, NibReusable {
     }
     
     func setData(data: Nutrients) {
+        nameLabel.text = data.title
+        valueLabel.text = "\(data.amount)/\(data.percentOfDailyNeeds) \(data.unit)"
+        dailyNeedLabel.text = ""
+        if data.amount > data.percentOfDailyNeeds {
+            valueLabel.textColor = .systemRed
+            dailyNeedLabel.textColor = .systemGreen
+        } else {
+            valueLabel.textColor = .systemGreen
+            dailyNeedLabel.textColor = nameLabel.textColor
+        }
     }
     
 }

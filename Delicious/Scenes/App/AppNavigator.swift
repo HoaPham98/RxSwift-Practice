@@ -32,7 +32,17 @@ struct AppNavigator: AppNavigatorType {
         let homeViewModel = HomeViewModel(navigator: homeNavigator, useCase: homeUseCase)
         homeVC.bindViewModel(to: homeViewModel)
         
-        tabbar.viewControllers = [navHome]
+        // MARK: Favorite
+        let favoriteVC = FavoriteViewController.instantiate()
+        let navFavorite = CustomNavigationController(rootViewController: favoriteVC).then {
+            $0.tabBarItem = UITabBarItem(title: "Favorite", image: Icon.icFavoriteSelected, selectedImage: Icon.icFavoriteSelectedOrange)
+        }
+        let favoriteNavigator = FavoriteNavigator(navigationController: navFavorite)
+        let favoriteUseCase = FavoriteUseCase()
+        let favoriteViewModel = FavoriteViewModel(navigator: favoriteNavigator, useCase: favoriteUseCase)
+        favoriteVC.bindViewModel(to: favoriteViewModel)
+        
+        tabbar.viewControllers = [navHome, navFavorite]
         
         window.rootViewController = tabbar
     }

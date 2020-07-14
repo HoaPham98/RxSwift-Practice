@@ -24,13 +24,13 @@ target 'Delicious' do
     pod 'RxDataSources'
     
     # Core Data
-    pod 'MagicalRecord'
+    pod 'MagicalRecord', '2.3.0'
     
     # UI
     pod 'MBProgressHUD'
     pod 'SDWebImage'
     pod 'SnapKit'
     pod 'MarqueeLabel'
-#    pod 'MBSegmentControl', :git => 'https://github.com/HoaPham98/MBSegmentControl.git'
+    pod 'MBSegmentControl', :path => '~/Desktop/MBSegmentControl'
 
 end

@@ -42,12 +42,12 @@ struct HomeRepositoy: HomeRespositoryType {
     
     func getRecipeInfomation(input: RecipeInfoRequest) -> Observable<RecipeInformation> {
         return Observable<RecipeInformation>.create { observer in
-            if let path = Bundle.main.path(forResource: "response-2", ofType: "json") {
+            if let path = Bundle.main.path(forResource: "response", ofType: "json") {
                 do {
                     let data = try String(contentsOfFile: path, encoding: .utf8)
-                    if let response = HomeResponse(JSONString: data) {
+                    if let response = RecipeInformation(JSONString: data) {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                            observer.onNext(response.recipes.first(where: { $0.id == input.id })!)
+                            observer.onNext(response)
                             })
                     } else {
                         observer.onError(BaseError.networkError)

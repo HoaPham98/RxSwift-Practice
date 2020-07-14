@@ -16,7 +16,7 @@ import MGLoadMore
 import Reusable
 import SnapKit
 import RxDataSources
-import RxAnimated
+import MBSegmentControl
 
 final class RecipeInfoViewController: UIViewController, BindableType {
     
@@ -46,6 +46,8 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     private var navigationBarHeight: CGFloat = (Helpers.statusBarSize?.height ?? 0) + 44
     private var headerHeight: CGFloat = 150
     private var isFavorite: Bool = false
+    
+    private let favoriteTap = PublishSubject<Bool>()
     
     private var isShoppingButtonHidden: Binder<Bool> {
         return Binder(self) { (viewController, status) in
@@ -161,7 +163,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
         let input = RecipeInfoViewModel.Input(
             loadTrigger: Driver.just(()),
             reloadTrigger: refreshControl.refreshTrigger,
-            favoriteTrigger: favoriteButton.rx.tap.asDriver(),
+            favoriteTrigger: favoriteTap.asDriverOnErrorJustComplete(),
             segmentTrigger: segmentControl.rx.selectedSegmentIndex.asDriver(),
             addToShoppingListTrigger: addToShoppingButton.rx.tap.asDriver())
         
@@ -174,6 +176,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
         output.title.drive(titleLabel.rx.text).disposed(by: rx.disposeBag)
         output.dataSource.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
         output.shoppingButtonHidden.drive(isShoppingButtonHidden).disposed(by: rx.disposeBag)
+        output.favoriteTap.drive().disposed(by: rx.disposeBag)
     }
     
     @IBAction func tapFavorite(_ sender: Any) {
@@ -181,6 +184,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
         isFavorite = !isFavorite
         let image = isFavorite ? Icon.icFavoriteSelected : Icon.icFavorite
         button.image = image
+        favoriteTap.onNext(isFavorite)
     }
 }
 

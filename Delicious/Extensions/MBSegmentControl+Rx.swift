@@ -9,6 +9,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import MBSegmentControl
 
 extension Reactive where Base: MBSegmentControl {
     /// Reactive wrapper for `selectedSegmentIndex` property.

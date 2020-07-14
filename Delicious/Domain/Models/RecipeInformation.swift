@@ -18,6 +18,19 @@ protocol RecipeType {
     var creditsText: String { get set }
 }
 
+extension RecipeType {
+    func mapToFavorite() -> FavoriteRecipe {
+        return FavoriteRecipe(
+            id: self.id,
+            title: self.title,
+            readyInMinutes: self.readyInMinutes,
+            servings: self.servings,
+            image: self.image,
+            creditsText: self.creditsText
+        )
+    }
+}
+
 struct RecipeInformation: Mappable, RecipeType {
 	var vegetarian = false
 	var vegan = false

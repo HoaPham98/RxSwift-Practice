@@ -11,7 +11,7 @@ import RxSwift
 protocol RecipeInfoUseCaseType {
     func getRecipe(id: Int) -> Observable<RecipeInformation>
     func addToShopingList()
-    func updateFavorite(recipe: RecipeType, status: Bool)
+    func updateFavorite(recipe: RecipeType, status: Bool) -> Observable<Void>
 }
 
 struct RecipeInfoUseCase: RecipeInfoUseCaseType {
@@ -25,7 +25,12 @@ struct RecipeInfoUseCase: RecipeInfoUseCaseType {
         
     }
     
-    func updateFavorite(recipe: RecipeType, status: Bool) {
-        
+    func updateFavorite(recipe: RecipeType, status: Bool) -> Observable<Void> {
+        let repository = FavoriteRepository()
+        if status {
+            return repository.add([recipe.mapToFavorite()])
+        } else {
+            return repository.deleteItem(havingID: recipe.id)
+        }
     }
 }

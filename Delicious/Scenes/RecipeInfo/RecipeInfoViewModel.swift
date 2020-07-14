@@ -20,7 +20,7 @@ extension RecipeInfoViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
-        let favoriteTrigger: Driver<Void>
+        let favoriteTrigger: Driver<Bool>
         let segmentTrigger: Driver<Int>
         let addToShoppingListTrigger: Driver<Void>
     }
@@ -47,10 +47,10 @@ extension RecipeInfoViewModel: ViewModelType {
         let recipeInfo = getItem(loadTrigger: input.loadTrigger, reloadTrigger: input.reloadTrigger) { _ in
             return self.useCase.getRecipe(id: self.recipe.id).trackError(error)
         }
-        let favoriteTap = input.favoriteTrigger.do(onNext: { _ in
-            
-        })
-        .mapToVoid()
+        let favoriteTap = input.favoriteTrigger
+            .withLatestFrom(recipe) {
+                return self.useCase.updateFavorite(recipe: $1, status: $0)
+        }.mapToVoid()
         
         let dataSource = Driver.combineLatest(input.segmentTrigger, recipeInfo.item).flatMapLatest { (index, recipe) -> Driver<[RecipeTableViewSection]> in
             switch index {
@@ -75,6 +75,6 @@ extension RecipeInfoViewModel: ViewModelType {
             isLoading: recipeInfo.isLoading,
             isReloading: recipeInfo.isReloading,
             error: error.asDriver(),
-            favoriteTap: favoriteTap.asDriver())
+            favoriteTap: favoriteTap)
     }
 }

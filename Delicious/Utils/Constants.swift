@@ -19,6 +19,7 @@ enum Icon {
     
     static let icFavoriteSelected = #imageLiteral(resourceName: "ic_favorites_grey")
     static let icFavorite = #imageLiteral(resourceName: "ic_favorite")
+    static let icFavoriteSelectedOrange = #imageLiteral(resourceName: "ic_favorites_orange")
 }
 
 enum Constant {
