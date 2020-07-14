@@ -11,7 +11,9 @@ import RxSwift
 
 extension Reactive where Base: MagicalRecord {
     static func save(block: @escaping (NSManagedObjectContext?) -> Void) -> Observable<Bool> {
+        print("Outside block....")
         return Observable.create { observer in
+            print("Inside block...")
             MagicalRecord.save(block, completion: { (changed, error) in
                 if let error = error {
                     observer.onError(error)

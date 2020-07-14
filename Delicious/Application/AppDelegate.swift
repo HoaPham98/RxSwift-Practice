@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setupCoreData() {
         MagicalRecord.setupAutoMigratingCoreDataStack()
-        MagicalRecord.setLoggingLevel(MagicalRecordLoggingLevel.all)
+        MagicalRecord.setLoggingLevel(.verbose)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

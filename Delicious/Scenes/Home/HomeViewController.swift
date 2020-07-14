@@ -77,12 +77,7 @@ final class HomeViewController: UIViewController, BindableType {
         output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
         output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
         output.error.drive(rx.error).disposed(by: rx.disposeBag)
-        output.selected.drive(onNext: { [weak self] _ in
-            guard let `self` = self else { return }
-            if let selectedIndexpath = self.tableView.indexPathForSelectedRow {
-                self.tableView.deselectRow(at: selectedIndexpath, animated: true)
-            }
-        }, onCompleted: nil, onDisposed: nil).disposed(by: rx.disposeBag)
+        output.selected.drive().disposed(by: rx.disposeBag)
         output.data.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
 
         tableView.rx.modelSelected(HomeTableViewItem.self).compactMap { (item) -> RecipeType? in
@@ -97,6 +92,10 @@ final class HomeViewController: UIViewController, BindableType {
 }
 
 extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 38
     }

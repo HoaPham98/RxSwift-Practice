@@ -93,7 +93,7 @@ extension CoreDataRepository where
                     Self.map(from: item, to: entity)
                 }
             }
-            }).debug()
+        })
     }
     
     func add(_ item: ModelType) -> Observable<Void> {

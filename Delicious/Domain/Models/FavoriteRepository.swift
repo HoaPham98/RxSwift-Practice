@@ -14,7 +14,7 @@ protocol FavoriteRepositoryType: CoreDataRepository {
 }
 
 extension FavoriteRepositoryType where Self.ModelType == FavoriteRecipe, Self.EntityType == CDFavoriteRecipe {
-    func getFavoriteRecipes() -> Observable<[FavoriteRecipe]> {
+    func getRecipes() -> Observable<[FavoriteRecipe]> {
         return all()
     }
 
@@ -25,8 +25,8 @@ extension FavoriteRepositoryType where Self.ModelType == FavoriteRecipe, Self.En
     static func map(from item: FavoriteRecipe, to entity: CDFavoriteRecipe) {
         entity.id = Int64(item.id)
         entity.title = item.title
-        entity.image = item.image
         entity.creditsText = item.creditsText
+        entity.image = item.image
         entity.readyInMinutes = Int64(item.readyInMinutes)
         entity.servings = Int64(item.servings)
     }
@@ -38,7 +38,8 @@ extension FavoriteRepositoryType where Self.ModelType == FavoriteRecipe, Self.En
             readyInMinutes: Int(entity.readyInMinutes),
             servings: Int(entity.servings),
             image: entity.image ?? "",
-            creditsText: entity.creditsText ?? "")
+            creditsText: entity.creditsText ?? ""
+        )
     }
 }
 

@@ -11,14 +11,39 @@ import RxSwift
 
 extension UIViewController {
     func showError(message: String, completion: (() -> Void)? = nil) {
-        let ac = UIAlertController(title: "Error",
+        let alert = UIAlertController(title: "Error",
                                    message: message,
                                    preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel) { _ in
             completion?()
         }
-        ac.addAction(okAction)
-        present(ac, animated: true, completion: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlertConfirm(title: String?,
+                          message: String?,
+                          confirmTitle: String = "OK",
+                          confirmHandler: (() -> Void)? = nil,
+                          cancelTitle: String = "Cancel",
+                          cancelHandler: (() -> Void)? = nil) {
+        
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        // Custom action
+        let btnCancel = UIAlertAction(
+            title: cancelTitle,
+            style: .destructive) { _ in cancelHandler?() }
+        alert.addAction(btnCancel)
+        
+        let btnConfirm = UIAlertAction(
+        title: confirmTitle,
+        style: .default) { (_) in confirmHandler?() }
+        alert.addAction(btnConfirm)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     func showAlertView(title: String?,

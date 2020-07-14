@@ -22,6 +22,7 @@ target 'Delicious' do
     # Rx
     pod 'NSObject+Rx'
     pod 'RxDataSources'
+    pod 'RxViewController'
     
     # Core Data
     pod 'MagicalRecord', '2.3.0'

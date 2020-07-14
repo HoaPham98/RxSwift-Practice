@@ -12,6 +12,7 @@ protocol RecipeInfoUseCaseType {
     func getRecipe(id: Int) -> Observable<RecipeInformation>
     func addToShopingList()
     func updateFavorite(recipe: RecipeType, status: Bool) -> Observable<Void>
+    func checkFavorite(recipe: RecipeType) -> Observable<Bool>
 }
 
 struct RecipeInfoUseCase: RecipeInfoUseCaseType {
@@ -32,5 +33,10 @@ struct RecipeInfoUseCase: RecipeInfoUseCaseType {
         } else {
             return repository.deleteItem(havingID: recipe.id)
         }
+    }
+    
+    func checkFavorite(recipe: RecipeType) -> Observable<Bool> {
+        let repository = FavoriteRepository()
+        return repository.item(havingID: recipe.id).map { $0 != nil }
     }
 }

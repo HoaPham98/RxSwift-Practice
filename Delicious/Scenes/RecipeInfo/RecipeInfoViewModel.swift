@@ -28,12 +28,12 @@ extension RecipeInfoViewModel: ViewModelType {
     struct Output {
         let title: Driver<String>
         let recipe: Driver<RecipeType>
+        let isFavorited: Driver<Bool>
         let dataSource: Driver<[RecipeTableViewSection]>
         let shoppingButtonHidden: Driver<Bool>
         let isLoading: Driver<Bool>
         let isReloading: Driver<Bool>
         let error: Driver<Error>
-        let favoriteTap: Driver<Void>
     }
     
     func transform(_ input: RecipeInfoViewModel.Input) -> RecipeInfoViewModel.Output {
@@ -44,13 +44,24 @@ extension RecipeInfoViewModel: ViewModelType {
         let recipe = input.loadTrigger.map { _ in
             return self.recipe
         }
-        let recipeInfo = getItem(loadTrigger: input.loadTrigger, reloadTrigger: input.reloadTrigger) { _ in
+        let recipeInfo = getItem(
+            loadTrigger: input.loadTrigger,
+            reloadTrigger: input.reloadTrigger) { _ in
             return self.useCase.getRecipe(id: self.recipe.id).trackError(error)
         }
-        let favoriteTap = input.favoriteTrigger
-            .withLatestFrom(recipe) {
-                return self.useCase.updateFavorite(recipe: $1, status: $0)
-        }.mapToVoid()
+        let isFavorited = input.loadTrigger.flatMapLatest { _ in
+            self.useCase
+                .checkFavorite(recipe: self.recipe)
+                .asDriverOnErrorJustComplete()
+        }
+        let favoriteTap = Driver
+            .combineLatest(recipe, input.favoriteTrigger)
+            .flatMapLatest { (recipe, status) -> Driver<Bool> in
+                self.useCase
+                    .updateFavorite(recipe: recipe, status: status)
+                    .map { return status }
+                    .asDriverOnErrorJustComplete()
+        }
         
         let dataSource = Driver.combineLatest(input.segmentTrigger, recipeInfo.item).flatMapLatest { (index, recipe) -> Driver<[RecipeTableViewSection]> in
             switch index {
@@ -70,11 +81,11 @@ extension RecipeInfoViewModel: ViewModelType {
         return Output(
             title: title,
             recipe: recipe,
+            isFavorited: Driver.merge(isFavorited, favoriteTap),
             dataSource: dataSource,
             shoppingButtonHidden: isHidden,
             isLoading: recipeInfo.isLoading,
             isReloading: recipeInfo.isReloading,
-            error: error.asDriver(),
-            favoriteTap: favoriteTap)
+            error: error.asDriver())
     }
 }

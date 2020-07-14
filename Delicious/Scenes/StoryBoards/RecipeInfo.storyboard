@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -121,7 +121,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addToShoppingButton" destination="Yg8-Ka-7lH" id="YfD-yS-P1o"/>
-                        <outlet property="favoriteButton" destination="z1u-Dg-6fC" id="Npr-Si-PV2"/>
+                        <outlet property="favoriteButton" destination="z1u-Dg-6fC" id="fC7-Va-sT0"/>
                         <outlet property="headerHeightConstraint" destination="qh6-by-DuO" id="jdf-5q-nEf"/>
                         <outlet property="headerTopConstraint" destination="24i-UF-arA" id="knL-aL-0w4"/>
                         <outlet property="headerView" destination="UTD-KB-m7t" id="ZbG-3a-NfD"/>

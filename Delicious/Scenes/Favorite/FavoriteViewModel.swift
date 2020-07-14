@@ -16,30 +16,50 @@ struct FavoriteViewModel {
 extension FavoriteViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Void>
-        let selectedTrigger: Driver<FavoriteRecipe>
+        let reloadTrigger: Driver<Void>
         let deletedTrigger: Driver<FavoriteRecipe>
+        let selectedTrigger: Driver<FavoriteRecipe>
     }
     
     struct Output {
-        let recipes: Driver<[FavoriteRecipe]>
+        let data: Driver<[FavoriteRecipe]>
+        let isLoading: Driver<Bool>
+        let isReloading: Driver<Bool>
+        let error: Driver<Error>
         let selected: Driver<Void>
+        let deleted: Driver<Void>
     }
     
     func transform(_ input: FavoriteViewModel.Input) -> FavoriteViewModel.Output {
         
-        let recipes = input.loadTrigger.flatMapLatest { _ in
-            return self.useCase
-                .getFavoriteRecipes()
-                .asDriverOnErrorJustComplete()
+        let error = ErrorTracker()
+
+        let recipe = getItem(
+            loadTrigger: input.loadTrigger,
+            reloadTrigger: input.reloadTrigger) { _ in
+                return self.useCase
+                    .getFavoriteRecipes()
+                    .trackError(error)
         }
         
         let selected = input.selectedTrigger
             .do(onNext: { self.navigator.toInfomation(recipe: $0) })
             .mapToVoid()
         
+        let deleted = input.deletedTrigger.flatMapLatest {
+            self.useCase
+                .remove(recipe: $0)
+                .trackError(error)
+                .asDriverOnErrorJustComplete()
+        }
+        
         return Output(
-            recipes: recipes,
-            selected: selected
+            data: recipe.item,
+            isLoading: recipe.isLoading,
+            isReloading: recipe.isReloading,
+            error: error.asDriver(),
+            selected: selected,
+            deleted: deleted
         )
     }
 }

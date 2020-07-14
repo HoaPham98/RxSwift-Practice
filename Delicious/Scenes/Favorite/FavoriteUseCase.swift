@@ -10,11 +10,16 @@ import RxSwift
 
 protocol FavoriteUseCaseType {
     func getFavoriteRecipes() -> Observable<[FavoriteRecipe]>
+    func remove(recipe: FavoriteRecipe) -> Observable<Void> 
 }
 
 struct FavoriteUseCase: FavoriteUseCaseType {
     
     func getFavoriteRecipes() -> Observable<[FavoriteRecipe]> {
-        return FavoriteRepository().getFavoriteRecipes()
+        return FavoriteRepository().getRecipes()
+    }
+    
+    func remove(recipe: FavoriteRecipe) -> Observable<Void> {
+        return FavoriteRepository().deleteItem(havingID: recipe.id)
     }
 }
