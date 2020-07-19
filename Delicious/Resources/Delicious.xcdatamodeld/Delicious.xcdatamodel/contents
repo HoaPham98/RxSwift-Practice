@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDFavoriteRecipe" representedClassName="CDFavoriteRecipe" syncable="YES" codeGenerationType="class">
         <attribute name="creditsText" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
@@ -10,11 +10,11 @@
     </entity>
     <entity name="CDShopingList" representedClassName="CDShopingList" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="ingredients" optional="YES" attributeType="Transformable"/>
+        <attribute name="ingredients" optional="YES" attributeType="Transformable" customClassName="[NSShortIngredient]"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="CDFavoriteRecipe" positionX="-63" positionY="-18" width="128" height="133"/>
-        <element name="CDShopingList" positionX="-54" positionY="18" width="128" height="88"/>
+        <element name="CDFavoriteRecipe" positionX="-265.9765625" positionY="-49.41015625" width="128" height="133"/>
+        <element name="CDShopingList" positionX="168.25" positionY="-77.3984375" width="128" height="88"/>
     </elements>
 </model>

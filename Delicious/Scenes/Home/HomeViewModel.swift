@@ -21,6 +21,7 @@ extension HomeViewModel: ViewModelType {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
         let selectTrigger: Driver<RecipeType?>
+        let searchTrigger: Driver<Void>
     }
 
     struct Output {
@@ -29,6 +30,7 @@ extension HomeViewModel: ViewModelType {
         let isReloading: Driver<Bool>
         let error: Driver<Error>
         let selected: Driver<Void>
+        let search: Driver<Void>
     }
 
     func transform(_ input: HomeViewModel.Input) -> HomeViewModel.Output {
@@ -52,12 +54,17 @@ extension HomeViewModel: ViewModelType {
             self.navigator.toInfomation(recipe: recipe)
         })
         .mapToVoid()
+        
+        let search = input.searchTrigger.do(onNext: { _ in
+            self.navigator.toSearch()
+            }).mapToVoid()
 
         return Output(
             data: recipe,
             isLoading: getRecipes.isLoading,
             isReloading: getRecipes.isReloading,
             error: error.asDriver(),
-            selected: selected)
+            selected: selected,
+            search: search)
     }
 }

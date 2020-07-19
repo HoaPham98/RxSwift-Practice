@@ -12,7 +12,7 @@ final class HomeRequest: BaseRequest {
     required init(number: Int = 20) {
         let body = ["limitLicense": "false",
                     "instructionsRequired": "true",
-                    "number": number] as [String : Any]
+                    "number": number] as [String: Any]
         super.init(url: URLs.API.homeUrl, requestType: .get, body: body)
     }
 }

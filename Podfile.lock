@@ -49,13 +49,14 @@ PODS:
   - SDWebImage/Core (5.7.4)
   - SnapKit (5.0.1)
   - Then (2.6.0)
+  - UICollectionViewLeftAlignedLayout (1.0.2)
   - Validator (3.2.1)
 
 DEPENDENCIES:
   - MagicalRecord (= 2.3.0)
   - MarqueeLabel
   - MBProgressHUD
-  - MBSegmentControl (from `~/Desktop/MBSegmentControl`)
+  - MBSegmentControl (from `https://github.com/HoaPham98/MBSegmentControl.git`)
   - MGAPIService
   - MGArchitecture
   - MGLoadMore
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - SDWebImage
   - SnapKit
   - Then
+  - UICollectionViewLeftAlignedLayout
   - Validator
 
 SPEC REPOS:
@@ -95,11 +97,17 @@ SPEC REPOS:
     - SDWebImage
     - SnapKit
     - Then
+    - UICollectionViewLeftAlignedLayout
     - Validator
 
 EXTERNAL SOURCES:
   MBSegmentControl:
-    :path: "~/Desktop/MBSegmentControl"
+    :git: https://github.com/HoaPham98/MBSegmentControl.git
+
+CHECKOUT OPTIONS:
+  MBSegmentControl:
+    :commit: 1c2645ff930d7454fdee385af07d4cb8a6c898aa
+    :git: https://github.com/HoaPham98/MBSegmentControl.git
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -125,8 +133,9 @@ SPEC CHECKSUMS:
   SDWebImage: 48b88379b798fd1e4298f95bb25d2cdabbf4deb3
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
+  UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: a72041747fa9541e0de45eee81735166f738aaaf
+PODFILE CHECKSUM: 726965d707d62b246de609f28afd49353f4475f8
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.3

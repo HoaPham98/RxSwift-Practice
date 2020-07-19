@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import RxDataSources
+
+typealias RecipeListSectionModel = AnimatableSectionModel<String, FavoriteRecipe>
 
 struct FavoriteViewModel {
     let navigator: FavoriteNavigatorType
@@ -22,7 +25,7 @@ extension FavoriteViewModel: ViewModelType {
     }
     
     struct Output {
-        let data: Driver<[FavoriteRecipe]>
+        let data: Driver<[RecipeListSectionModel]>
         let isLoading: Driver<Bool>
         let isReloading: Driver<Bool>
         let error: Driver<Error>
@@ -34,19 +37,26 @@ extension FavoriteViewModel: ViewModelType {
         
         let error = ErrorTracker()
 
-        let recipe = getItem(
+        let getRecipe = getItem(
             loadTrigger: input.loadTrigger,
             reloadTrigger: input.reloadTrigger) { _ in
                 return self.useCase
                     .getFavoriteRecipes()
                     .trackError(error)
         }
+        let recipe = getRecipe.item.map { [RecipeListSectionModel(model: "", items: $0)] }
         
         let selected = input.selectedTrigger
             .do(onNext: { self.navigator.toInfomation(recipe: $0) })
             .mapToVoid()
         
         let deleted = input.deletedTrigger.flatMapLatest {
+            self.navigator
+                .showDeletionConfirm(recipe: $0)
+                .trackError(error)
+                .asDriverOnErrorJustComplete()
+        }
+        .flatMapLatest {
             self.useCase
                 .remove(recipe: $0)
                 .trackError(error)
@@ -54,9 +64,9 @@ extension FavoriteViewModel: ViewModelType {
         }
         
         return Output(
-            data: recipe.item,
-            isLoading: recipe.isLoading,
-            isReloading: recipe.isReloading,
+            data: recipe,
+            isLoading: getRecipe.isLoading,
+            isReloading: getRecipe.isReloading,
             error: error.asDriver(),
             selected: selected,
             deleted: deleted

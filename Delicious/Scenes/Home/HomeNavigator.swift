@@ -18,7 +18,7 @@ struct HomeNavigator: HomeNavigatorType {
     
     func toInfomation(recipe: RecipeType) {
         let recipeInfoVC = RecipeInfoViewController.instantiate()
-        let navigator = RecipeInfoNavigator()
+        let navigator = RecipeInfoNavigator(navigationController: navigationController)
         let useCase = RecipeInfoUseCase()
         let viewModel = RecipeInfoViewModel(navigator: navigator, useCase: useCase, recipe: recipe)
         recipeInfoVC.bindViewModel(to: viewModel)
@@ -27,6 +27,12 @@ struct HomeNavigator: HomeNavigatorType {
     }
     
     func toSearch() {
-        // TODO: Go to Search Screen
+        let searchVC = SearchViewController.instantiate()
+        let navigator = SearchNavigator(navigationController: navigationController)
+        let useCase = SearchUseCase()
+        let viewModel = SearchViewModel(navigator: navigator, useCase: useCase)
+        searchVC.bindViewModel(to: viewModel)
+        
+        navigationController.pushViewController(searchVC, animated: true)
     }
 }

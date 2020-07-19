@@ -43,5 +43,4 @@ struct ExtendedIngredients: Mappable {
 		metaInformation <- map["metaInformation"]
 		measures <- map["measures"]
 	}
-
 }

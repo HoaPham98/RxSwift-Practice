@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 struct FavoriteRecipe: RecipeType {
     var id: Int
@@ -15,6 +16,7 @@ struct FavoriteRecipe: RecipeType {
     var servings: Int
     var image: String
     var creditsText: String
+
 }
 
 extension FavoriteRecipe: CoreDataModel {
@@ -24,5 +26,15 @@ extension FavoriteRecipe: CoreDataModel {
     
     var modelID: Int {
         return id
+    }
+}
+
+extension FavoriteRecipe: IdentifiableType, Equatable {
+    var identity: Int {
+        return id
+    }
+    
+    static func == (lhs: FavoriteRecipe, rhs: FavoriteRecipe) -> Bool {
+        return lhs.id == rhs.id
     }
 }

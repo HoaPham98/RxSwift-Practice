@@ -32,6 +32,7 @@ target 'Delicious' do
     pod 'SDWebImage'
     pod 'SnapKit'
     pod 'MarqueeLabel'
-    pod 'MBSegmentControl', :path => '~/Desktop/MBSegmentControl'
+    pod 'UICollectionViewLeftAlignedLayout'
+    pod 'MBSegmentControl', :git => 'https://github.com/HoaPham98/MBSegmentControl.git'
 
 end

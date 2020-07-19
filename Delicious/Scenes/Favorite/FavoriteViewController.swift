@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxDataSources
 
 class FavoriteViewController: UIViewController, BindableType {
     @IBOutlet weak var tableView: RefreshTableView!
@@ -29,10 +30,25 @@ class FavoriteViewController: UIViewController, BindableType {
     private func configViews() {
         tableView.do {
             $0.register(cellType: RecipeTBCell.self)
+            $0.refreshFooter = nil
         }
     }
 
     func bindViewModel() {
+        let dataSource = RxTableViewSectionedAnimatedDataSource<RecipeListSectionModel>(
+            animationConfiguration: AnimationConfiguration(insertAnimation: .right,
+                                                           reloadAnimation: .none,
+                                                           deleteAnimation: .left),
+            configureCell: { _, tableView, indexPath, recipe in
+                let cell = tableView.dequeueReusableCell(for: indexPath, cellType: RecipeTBCell.self)
+                cell.setInfo(recipe: recipe)
+                return cell
+            },
+            canEditRowAtIndexPath: { _, _ in
+                return true
+            }
+        )
+
         let input = FavoriteViewModel.Input(
             loadTrigger: loadTrigger.asDriverOnErrorJustComplete(),
             reloadTrigger: tableView.loadMoreTopTrigger,
@@ -40,16 +56,12 @@ class FavoriteViewController: UIViewController, BindableType {
             selectedTrigger: tableView.rx.modelSelected(FavoriteRecipe.self).asDriver())
 
         let output = viewModel.transform(input)
-        output.data.drive(tableView.rx.items) { tableView, index, recipe in
-            let indexPath = IndexPath(row: index, section: 0)
-            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: RecipeTBCell.self)
-            cell.setInfo(recipe: recipe)
-            return cell
-        }.disposed(by: rx.disposeBag)
+        output.data.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
         output.isLoading.drive(rx.isLoading).disposed(by: rx.disposeBag)
         output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
         output.error.drive(rx.error).disposed(by: rx.disposeBag)
         output.deleted.drive(loadTrigger).disposed(by: rx.disposeBag)
+        output.selected.drive().disposed(by: rx.disposeBag)
     }
 }
 

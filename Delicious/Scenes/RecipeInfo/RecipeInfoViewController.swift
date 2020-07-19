@@ -120,7 +120,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     }
 
     private func animateShoppingButton(status: Bool) {
-        if status {
+        if !status {
             shoppingViewBottomConstraint.constant = 16
             UIView.animate(withDuration: 0.25) {
                 self.view.layoutIfNeeded()
@@ -186,6 +186,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
             .drive(isShoppingButtonHidden)
             .disposed(by: rx.disposeBag)
         output.isFavorited.drive(isFavorited).disposed(by: rx.disposeBag)
+        output.tapShopingList.drive().disposed(by: rx.disposeBag)
     }
 }
 

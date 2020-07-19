@@ -10,9 +10,10 @@ import RxSwift
 
 protocol RecipeInfoUseCaseType {
     func getRecipe(id: Int) -> Observable<RecipeInformation>
-    func addToShopingList()
+    func addToShopingList(recipe: RecipeInformation) -> Observable<Void>
     func updateFavorite(recipe: RecipeType, status: Bool) -> Observable<Void>
     func checkFavorite(recipe: RecipeType) -> Observable<Bool>
+    func checkShoping(recipe: RecipeType) -> Observable<Bool>
 }
 
 struct RecipeInfoUseCase: RecipeInfoUseCaseType {
@@ -22,8 +23,8 @@ struct RecipeInfoUseCase: RecipeInfoUseCaseType {
         return repository.getRecipeInfomation(input: request)
     }
     
-    func addToShopingList() {
-        
+    func addToShopingList(recipe: RecipeInformation) -> Observable<Void> {
+        return ShopingListRepository().add([ShopingList(from: recipe)])
     }
     
     func updateFavorite(recipe: RecipeType, status: Bool) -> Observable<Void> {
@@ -38,5 +39,9 @@ struct RecipeInfoUseCase: RecipeInfoUseCaseType {
     func checkFavorite(recipe: RecipeType) -> Observable<Bool> {
         let repository = FavoriteRepository()
         return repository.item(havingID: recipe.id).map { $0 != nil }
+    }
+    
+    func checkShoping(recipe: RecipeType) -> Observable<Bool> {
+        return ShopingListRepository().item(havingID: recipe.id).map { $0 != nil }
     }
 }

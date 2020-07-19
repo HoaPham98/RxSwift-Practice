@@ -89,6 +89,11 @@ extension CoreDataRepository where
     func addAll(_ items: [ModelType]) -> Observable<Void> {
         return MagicalRecord.rx.save(block: { context in
             for item in items {
+                let predicate = NSPredicate(format: "\(ModelType.primaryKey) = " + (item.modelID is Int ? "%d" : "%@" ),
+                                            item.modelID)
+                if EntityType.mr_findFirst(with: predicate, in: context) != nil {
+                    return
+                }
                 if let entity = EntityType.mr_createEntity(in: context) {
                     Self.map(from: item, to: entity)
                 }

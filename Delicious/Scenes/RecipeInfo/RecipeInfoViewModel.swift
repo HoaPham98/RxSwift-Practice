@@ -34,6 +34,7 @@ extension RecipeInfoViewModel: ViewModelType {
         let isLoading: Driver<Bool>
         let isReloading: Driver<Bool>
         let error: Driver<Error>
+        let tapShopingList: Driver<Void>
     }
     
     func transform(_ input: RecipeInfoViewModel.Input) -> RecipeInfoViewModel.Output {
@@ -54,13 +55,21 @@ extension RecipeInfoViewModel: ViewModelType {
                 .checkFavorite(recipe: self.recipe)
                 .asDriverOnErrorJustComplete()
         }
-        let favoriteTap = Driver
-            .combineLatest(recipe, input.favoriteTrigger)
-            .flatMapLatest { (recipe, status) -> Driver<Bool> in
-                self.useCase
-                    .updateFavorite(recipe: recipe, status: status)
-                    .map { return status }
+        
+        let favoriteTap = input.favoriteTrigger.flatMapLatest { (status) -> Driver<Bool> in
+            if !status {
+                return self.navigator
+                    .showDeletionConfirm(recipe: self.recipe.mapToFavorite())
+                    .map { _ in false }
                     .asDriverOnErrorJustComplete()
+            } else {
+                return input.favoriteTrigger
+            }
+        }.flatMapLatest { (status) -> Driver<Bool> in
+            self.useCase
+                .updateFavorite(recipe: self.recipe, status: status)
+                .map { return status }
+                .asDriverOnErrorJustComplete()
         }
         
         let dataSource = Driver.combineLatest(input.segmentTrigger, recipeInfo.item).flatMapLatest { (index, recipe) -> Driver<[RecipeTableViewSection]> in
@@ -74,9 +83,17 @@ extension RecipeInfoViewModel: ViewModelType {
             }
         }
         
-        let isHidden = input.segmentTrigger.map { index in
-            return index == 1
+        let tapShopingList = input.addToShoppingListTrigger.withLatestFrom(recipeInfo.item).flatMapLatest { (recipe) -> Driver<Void> in
+            self.useCase.addToShopingList(recipe: recipe).asDriverOnErrorJustComplete()
         }
+        
+        let checkShopingList = input.loadTrigger.flatMapLatest { (_) -> Driver<Bool> in
+            self.useCase.checkFavorite(recipe: self.recipe).asDriverOnErrorJustComplete()
+        }
+        
+        let isHidden = input.segmentTrigger.withLatestFrom(checkShopingList, resultSelector: { (index, status) -> Bool in
+            return status ? true : index != 1
+        })
         
         return Output(
             title: title,
@@ -86,6 +103,7 @@ extension RecipeInfoViewModel: ViewModelType {
             shoppingButtonHidden: isHidden,
             isLoading: recipeInfo.isLoading,
             isReloading: recipeInfo.isReloading,
-            error: error.asDriver())
+            error: error.asDriver(),
+            tapShopingList: tapShopingList)
     }
 }

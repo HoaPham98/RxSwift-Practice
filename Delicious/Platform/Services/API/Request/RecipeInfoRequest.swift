@@ -9,9 +9,8 @@
 import Foundation
 
 class RecipeInfoRequest: BaseRequest {
-    var id: Int
     init(id: Int) {
-        self.id = id
-        super.init(url: "")
+        let body = ["includeNutrition": "true"]
+        super.init(url: String(format: URLs.API.informationUrl, id), body: body)
     }
 }

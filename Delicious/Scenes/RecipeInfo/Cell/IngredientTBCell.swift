@@ -22,4 +22,8 @@ class IngredientTBCell: UITableViewCell, NibReusable {
         ingredientLabel.text = data.originalString
     }
     
+    func setUp(short: ShortIngredient) {
+        ingredientLabel.text = short.title
+    }
+    
 }

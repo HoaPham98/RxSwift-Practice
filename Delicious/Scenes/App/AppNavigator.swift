@@ -42,7 +42,17 @@ struct AppNavigator: AppNavigatorType {
         let favoriteViewModel = FavoriteViewModel(navigator: favoriteNavigator, useCase: favoriteUseCase)
         favoriteVC.bindViewModel(to: favoriteViewModel)
         
-        tabbar.viewControllers = [navHome, navFavorite]
+        // MARK: Shoping List
+        let shopingListVC = ShopingListViewController.instantiate()
+        let navShopingList = CustomNavigationController(rootViewController: shopingListVC).then {
+            $0.tabBarItem = UITabBarItem(title: "Shoping List", image: Icon.icShoping, selectedImage: Icon.icShopingSelected)
+        }
+        let shopingListNavigator = ShopingListNavigator(navigationController: navShopingList)
+        let shopingListUseCase = ShopingListUseCase()
+        let shopingListViewModel = ShopingListViewModel(navigator: shopingListNavigator, useCase: shopingListUseCase)
+        shopingListVC.bindViewModel(to: shopingListViewModel)
+        
+        tabbar.viewControllers = [navHome, navFavorite, navShopingList]
         
         window.rootViewController = tabbar
     }

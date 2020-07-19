@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import RxDataSources
 
 protocol RecipeType {
     var id: Int { get set }
@@ -31,7 +32,7 @@ extension RecipeType {
     }
 }
 
-struct RecipeInformation: Mappable, RecipeType {
+struct RecipeInformation: Mappable, RecipeType, IdentifiableType, Equatable {
 	var vegetarian = false
 	var vegan = false
 	var glutenFree = false
@@ -67,6 +68,9 @@ struct RecipeInformation: Mappable, RecipeType {
 	var instructions = ""
 	var analyzedInstructions = [AnalyzedInstructions]()
 	var originalId = ""
+    var identity: Int {
+        return id
+    }
     
     init() {
         
@@ -113,4 +117,8 @@ struct RecipeInformation: Mappable, RecipeType {
 		analyzedInstructions <- map["analyzedInstructions"]
 		originalId <- map["originalId"]
 	}
+    
+    static func == (lhs: RecipeInformation, rhs: RecipeInformation) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

@@ -18,7 +18,8 @@ import RxDataSources
 
 final class HomeViewController: UIViewController, BindableType {
     @IBOutlet weak private var tableView: RefreshTableView!
-
+    @IBOutlet weak var searchButton: UIBarButtonItem!
+    
     var viewModel: HomeViewModel!
 
     private let selectedCLTrigger = PublishSubject<RecipeType?>()
@@ -70,7 +71,8 @@ final class HomeViewController: UIViewController, BindableType {
         let input = HomeViewModel.Input(
             loadTrigger: Driver.just(()),
             reloadTrigger: tableView.loadMoreTopTrigger,
-            selectTrigger: selectedCLTrigger.asDriver(onErrorJustReturn: nil))
+            selectTrigger: selectedCLTrigger.asDriver(onErrorJustReturn: nil),
+            searchTrigger: searchButton.rx.tap.asDriver())
         
         let output = viewModel.transform(input)
         
@@ -78,6 +80,7 @@ final class HomeViewController: UIViewController, BindableType {
         output.isReloading.drive(tableView.isLoadingMoreTop).disposed(by: rx.disposeBag)
         output.error.drive(rx.error).disposed(by: rx.disposeBag)
         output.selected.drive().disposed(by: rx.disposeBag)
+        output.search.drive().disposed(by: rx.disposeBag)
         output.data.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
 
         tableView.rx.modelSelected(HomeTableViewItem.self).compactMap { (item) -> RecipeType? in
