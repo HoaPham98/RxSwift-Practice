@@ -21,4 +21,13 @@ enum Helpers {
     
     static var statusBarSize: CGSize?
     static var safeAreaInsets: UIEdgeInsets?
+    
+    static var recentSearch: LimitedArray<String> {
+        get {
+            return UserDefaults.standard.object(forKey: Constant.kRecentRecipe) as? LimitedArray<String> ?? LimitedArray<String>(maxSize: Constant.kMaxRecentSize)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Constant.kRecentRecipe)
+        }
+    }
 }

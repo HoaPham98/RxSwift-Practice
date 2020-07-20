@@ -22,6 +22,7 @@ extension RecipeInfoViewModel: ViewModelType {
         let reloadTrigger: Driver<Void>
         let favoriteTrigger: Driver<Bool>
         let segmentTrigger: Driver<Int>
+        let loadShoppingListTrigger: Driver<Void>
         let addToShoppingListTrigger: Driver<Void>
     }
     
@@ -68,6 +69,7 @@ extension RecipeInfoViewModel: ViewModelType {
         }.flatMapLatest { (status) -> Driver<Bool> in
             self.useCase
                 .updateFavorite(recipe: self.recipe, status: status)
+                .trackError(error)
                 .map { return status }
                 .asDriverOnErrorJustComplete()
         }
@@ -84,16 +86,18 @@ extension RecipeInfoViewModel: ViewModelType {
         }
         
         let tapShopingList = input.addToShoppingListTrigger.withLatestFrom(recipeInfo.item).flatMapLatest { (recipe) -> Driver<Void> in
-            self.useCase.addToShopingList(recipe: recipe).asDriverOnErrorJustComplete()
+            self.useCase.addToShopingList(recipe: recipe, type: self.recipe).trackError(error).asDriverOnErrorJustComplete()
         }
         
-        let checkShopingList = input.loadTrigger.flatMapLatest { (_) -> Driver<Bool> in
-            self.useCase.checkFavorite(recipe: self.recipe).asDriverOnErrorJustComplete()
+        let checkShopingList = Driver.merge(input.loadTrigger, input.loadShoppingListTrigger).flatMapLatest { (_) -> Driver<Bool> in
+            self.useCase
+                .checkShoping(recipe: self.recipe)
+                .asDriverOnErrorJustComplete()
         }
         
-        let isHidden = input.segmentTrigger.withLatestFrom(checkShopingList, resultSelector: { (index, status) -> Bool in
-            return status ? true : index != 1
-        })
+        let isHidden = Driver.combineLatest(input.segmentTrigger, checkShopingList).map { (index, status) -> Bool in
+            return status || !(index == 1)
+        }
         
         return Output(
             title: title,

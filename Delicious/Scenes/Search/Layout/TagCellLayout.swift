@@ -22,7 +22,7 @@ class TagCellLayout: UICollectionViewLayout {
     
     weak var delegate: TagCellLayoutDelegate?
     
-    //MARK: - Init Methods
+    // MARK: - Init Methods
     
     public init(alignment: LayoutAlignment = .left, delegate: TagCellLayoutDelegate?) {
         self.delegate = delegate
@@ -39,7 +39,7 @@ class TagCellLayout: UICollectionViewLayout {
         self.init(delegate: nil)
     }
     
-    //MARK: - Override Methods
+    // MARK: - Override Methods
     
     override public func prepare() {
         resetLayoutState()
@@ -67,7 +67,7 @@ class TagCellLayout: UICollectionViewLayout {
     }
 }
 
-//MARK: - Private Methods
+// MARK: - Private Methods
 private extension TagCellLayout {
     
     var currentTagFrame: CGRect {

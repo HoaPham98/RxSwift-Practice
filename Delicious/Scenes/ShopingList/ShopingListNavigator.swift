@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ShopingListNavigatorType {
-    // TODO: Add go to information?
     func showDeletionConfirm(list: ShopingList) -> Observable<ShopingList>
+    func toInformation(recipe: RecipeType)
 }
 
 struct ShopingListNavigator: ShopingListNavigatorType {
@@ -26,5 +26,15 @@ struct ShopingListNavigator: ShopingListNavigatorType {
                                      ("Cancel", .cancel)])
             .filter { $0 == 0 }
             .map { _ in list }
+    }
+    
+    func toInformation(recipe: RecipeType) {
+        let recipeInfoVC = RecipeInfoViewController.instantiate()
+        let navigator = RecipeInfoNavigator(navigationController: navigationController)
+        let useCase = RecipeInfoUseCase()
+        let viewModel = RecipeInfoViewModel(navigator: navigator, useCase: useCase, recipe: recipe)
+        recipeInfoVC.bindViewModel(to: viewModel)
+        
+        navigationController.pushViewController(recipeInfoVC, animated: true)
     }
 }

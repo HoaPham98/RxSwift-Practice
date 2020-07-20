@@ -18,10 +18,13 @@ class SearchViewController: UIViewController, BindableType {
     }
     @IBOutlet weak var collectionView: UICollectionView!
     
+    private let loadTrigger = PublishSubject<Void>()
+    private let searchTrigger = PublishSubject<SearchModel>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.titleView = searchBar
+        navigationItem.titleView = searchBar
         searchBar.becomeFirstResponder()
         collectionView.do {
             $0.register(cellType: TagCollectionViewCell.self)
@@ -29,6 +32,11 @@ class SearchViewController: UIViewController, BindableType {
             $0.rx.setDelegate(self).disposed(by: rx.disposeBag)
             $0.contentInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadTrigger.onNext(())
     }
     
     func bindViewModel() {
@@ -39,8 +47,14 @@ class SearchViewController: UIViewController, BindableType {
                     let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: TagCollectionViewCell.self)
                     cell.setData(text: tag.textString)
                     return cell
-                default:
-                    return UICollectionViewCell()
+                case .result(let recipe):
+                    let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: RecipeCollectionViewCell.self)
+                    cell.setInfo(recipe: recipe)
+                    return cell
+                case .suggest(let text):
+                    let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: SuggestCollectionViewCell.self)
+                    cell.setUp(text)
+                    return cell
                 }
         },
             configureSupplementaryView: { (data, collectionView, kind, indexPath) -> UICollectionReusableView in
@@ -59,8 +73,16 @@ class SearchViewController: UIViewController, BindableType {
                 }
                 
         })
-        
-        let input = SearchViewModel.Input()
+        let input = SearchViewModel.Input(
+            loadTrigger: loadTrigger.asDriverOnErrorJustComplete(),
+            searchTrigger: searchTrigger.asDriverOnErrorJustComplete(),
+            autoCompletion: searchBar.rx.text.orEmpty
+                                        .filter { !$0.isEmpty  }
+                                        .asDriverOnErrorJustComplete()
+                                        .debounce(.milliseconds(500))
+                                        .distinctUntilChanged(),
+            selectTrigger: Driver.of()
+        )
         let output = viewModel.transform(input)
         
         output.data.drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
@@ -68,20 +90,17 @@ class SearchViewController: UIViewController, BindableType {
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return Search.cuisines.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: TagCollectionViewCell.self)
-//        cell.setData(text: Search.cuisines[indexPath.row])
-//        return cell
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-       // Pass parameter into this function according to your requirement
-      return CGSize(width:collectionView.bounds.width , height: 38)
+      return CGSize(width: collectionView.bounds.width, height: 38)
+    }
+}
 
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let query = searchBar.text {
+            let search = SearchModel(text: query, tags: [])
+            searchTrigger.onNext(search)
+        }
     }
 }
 

@@ -25,7 +25,7 @@ enum Icon {
     static let icShopingSelected = #imageLiteral(resourceName: "ic_recipes_orange")
 }
 
-enum Search {
+enum SearchTag {
     case recent(String)
     case type(String)
     case cuisine(String)
@@ -109,5 +109,7 @@ enum Search {
 }
 
 enum Constant {
-    
+    static let kMaxRecentSize = 5
+    static let kRecentSearch = "kRecentSearch"
+    static let kRecentRecipe = "kRecentRecipe"
 }

@@ -11,6 +11,7 @@ import RxSwift
 protocol RecipeInfoUseCaseType {
     func getRecipe(id: Int) -> Observable<RecipeInformation>
     func addToShopingList(recipe: RecipeInformation) -> Observable<Void>
+    func addToShopingList(recipe: RecipeInformation, type: RecipeType) -> Observable<Void>
     func updateFavorite(recipe: RecipeType, status: Bool) -> Observable<Void>
     func checkFavorite(recipe: RecipeType) -> Observable<Bool>
     func checkShoping(recipe: RecipeType) -> Observable<Bool>
@@ -21,6 +22,13 @@ struct RecipeInfoUseCase: RecipeInfoUseCaseType {
         let repository = HomeRepositoy()
         let request = RecipeInfoRequest(id: id)
         return repository.getRecipeInfomation(input: request)
+    }
+    
+    func addToShopingList(recipe: RecipeInformation, type: RecipeType) -> Observable<Void> {
+        var recipe = recipe
+        recipe.id = type.id
+        recipe.title = type.title
+        return ShopingListRepository().add(ShopingList(from: recipe))
     }
     
     func addToShopingList(recipe: RecipeInformation) -> Observable<Void> {

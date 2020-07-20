@@ -9,13 +9,15 @@
 import RxDataSources
 
 enum SearchCollectionViewItem {
-    case tag(item: Search)
+    case tag(item: SearchTag)
     case result(item: RecipeType)
+    case suggest(item: String)
 }
 
 enum SearchCollectionViewSection {
     case tagSection(items: [SearchCollectionViewItem])
     case resultSection(items: [SearchCollectionViewItem])
+    case suggestSection(items: [SearchCollectionViewItem])
 }
 
 extension SearchCollectionViewSection: SectionModelType {
@@ -30,6 +32,8 @@ extension SearchCollectionViewSection: SectionModelType {
             return recipes
         case .tagSection(let tags):
             return tags
+        case .suggestSection(let texts):
+            return texts
         }
     }
     

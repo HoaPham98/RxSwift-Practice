@@ -17,8 +17,10 @@ extension Reactive where Base: MagicalRecord {
             MagicalRecord.save(block, completion: { (changed, error) in
                 if let error = error {
                     observer.onError(error)
-                } else {
+                } else if changed {
                     observer.onNext(changed)
+                } else {
+                    observer.onError(CoreDataError.alreadyExist)
                 }
             })
             return Disposables.create()

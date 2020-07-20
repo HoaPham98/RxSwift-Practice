@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct SearchModel {
+    let text: String
+    let tags: [SearchTag]
+}
+
 struct SearchViewModel {
     let navigator: SearchNavigatorType
     let useCase: SearchUseCase
@@ -15,21 +20,27 @@ struct SearchViewModel {
 
 extension SearchViewModel: ViewModelType {
     struct Input {
-        
+        let loadTrigger: Driver<Void>
+        let searchTrigger: Driver<SearchModel>
+        let autoCompletion: Driver<String>
+        let selectTrigger: Driver<RecipeType>
     }
     
     struct Output {
         let data: Driver<[SearchCollectionViewSection]>
+//        let selected: Driver<Void>
+//        let autoCompletion: Driver<Void>
+//        let search: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
         
-        let data = [
-            SearchCollectionViewSection.tagSection(items: Search.cuisines.map { SearchCollectionViewItem.tag(item: Search.cuisine($0) )}),
-            SearchCollectionViewSection.tagSection(items: Search.mealTypes.map { SearchCollectionViewItem.tag(item: Search.type($0) )}),
-            SearchCollectionViewSection.tagSection(items: Search.diets.map { SearchCollectionViewItem.tag(item: Search.diet($0) )})
+        let searchTags = [
+            SearchCollectionViewSection.tagSection(items: SearchTag.cuisines.map { SearchCollectionViewItem.tag(item: SearchTag.cuisine($0) )}),
+            SearchCollectionViewSection.tagSection(items: SearchTag.mealTypes.map { SearchCollectionViewItem.tag(item: SearchTag.type($0) )}),
+            SearchCollectionViewSection.tagSection(items: SearchTag.diets.map { SearchCollectionViewItem.tag(item: SearchTag.diet($0) )})
         ]
         
-        return Output(data: Driver.just(data))
+        return Output(data: Driver.just(searchTags))
     }
 }

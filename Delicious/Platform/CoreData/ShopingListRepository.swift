@@ -24,16 +24,26 @@ extension ShopingListRepositoryType where Self.ModelType == ShopingList, Self.En
     static func map(from item: ShopingList, to entity: CDShopingList) {
         entity.id = Int64(item.id)
         entity.title = item.title
-        print("True count map \(item.ingredients.filter { $0.isDone }.count)")
+        entity.creditsText = item.creditsText
+        entity.image = item.image
+        entity.readyInMinutes = Int64(item.readyInMinutes)
         entity.ingredients = item.ingredients.map { $0.toClass() }
     }
     
     static func item(from entity: EntityType) -> ModelType? {
-        guard let title = entity.title, let ingredients = entity.ingredients else { return nil }
-        print("True count item \(ingredients.filter { $0.isDone }.count)")
-        return ShopingList(id: Int(entity.id),
-                           title: title,
-                           ingredients: ingredients.map { $0.toStruct() })
+        guard let title = entity.title,
+            let image = entity.image,
+            let creditsText = entity.creditsText,
+            let ingredients = entity.ingredients else { return nil }
+        return ShopingList(
+            id: Int(entity.id),
+            title: title,
+            readyInMinutes: Int(entity.readyInMinutes),
+            servings: Int(entity.servings),
+            image: image,
+            creditsText: creditsText,
+            ingredients: ingredients.map { $0.toStruct() }
+        )
     }
 }
 

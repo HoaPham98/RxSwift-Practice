@@ -46,6 +46,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
     }
 
     private let favoriteTap = PublishSubject<Bool>()
+    private let loadShopingListTrigger = PublishSubject<Void>()
 
     private var isShoppingButtonHidden: Binder<Bool> {
         return Binder(self) { (viewController, status) in
@@ -168,6 +169,7 @@ final class RecipeInfoViewController: UIViewController, BindableType {
             reloadTrigger: refreshControl.refreshTrigger,
             favoriteTrigger: favoriteButton.rx.tap.map { _ in return !self._isFavorite }.asDriverOnErrorJustComplete(),
             segmentTrigger: segmentControl.rx.selectedSegmentIndex.asDriver(),
+            loadShoppingListTrigger: loadShopingListTrigger.asDriverOnErrorJustComplete(),
             addToShoppingListTrigger: addToShoppingButton.rx.tap.asDriver())
 
         let output = viewModel.transform(input)
@@ -186,7 +188,10 @@ final class RecipeInfoViewController: UIViewController, BindableType {
             .drive(isShoppingButtonHidden)
             .disposed(by: rx.disposeBag)
         output.isFavorited.drive(isFavorited).disposed(by: rx.disposeBag)
-        output.tapShopingList.drive().disposed(by: rx.disposeBag)
+        output.tapShopingList.do(onNext: { [weak self] _ in
+            self?.loadShopingListTrigger.onNext(())
+            self?.showAlertConfirm(title: "Success", message: "Added to shoping list!")
+        }).drive().disposed(by: rx.disposeBag)
     }
 }
 

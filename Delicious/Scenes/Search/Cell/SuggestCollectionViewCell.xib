@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gTV-IL-0wX" customClass="SuggestCollectionViewCell" customModule="Delicious" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="246" height="64"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="246" height="64"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB2-dI-QDH">
+                        <rect key="frame" x="16" y="8" width="214" height="48"/>
+                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="dB2-dI-QDH" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="TqF-t0-zNj"/>
+                <constraint firstItem="dB2-dI-QDH" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="X3Q-4V-43C"/>
+                <constraint firstItem="dB2-dI-QDH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="plJ-Dn-jpS"/>
+                <constraint firstItem="dB2-dI-QDH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="upG-z2-yMS"/>
+            </constraints>
+            <size key="customSize" width="246" height="64"/>
+            <connections>
+                <outlet property="textLabel" destination="dB2-dI-QDH" id="eTv-8r-v94"/>
+            </connections>
+            <point key="canvasLocation" x="154" y="78"/>
+        </collectionViewCell>
+    </objects>
+</document>

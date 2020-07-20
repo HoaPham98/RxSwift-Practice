@@ -9,22 +9,21 @@
 import Foundation
 
 protocol SearchUseCaseType {
-    func getShopingListRecipes() -> Observable<[ShopingList]>
-    func remove(list: ShopingList) -> Observable<Void>
-    func update(list: ShopingList) -> Observable<Void>
+    func getRecentSearch() -> Observable<[String]>
+    func search(query: String, tags: [SearchTag]) -> Observable<[RecipeType]>
 }
 
-struct SearchUseCase: ShopingListUseCaseType {
-    
-    func getShopingListRecipes() -> Observable<[ShopingList]> {
-        return ShopingListRepository().getShopingLists()
+struct SearchUseCase: SearchUseCaseType {
+    func getRecentSearch() -> Observable<[String]> {
+        return Observable.create { observable in
+            let recent = Helpers.recentSearch
+            observable.onNext(recent.storage)
+            return Disposables.create()
+        }
     }
     
-    func remove(list: ShopingList) -> Observable<Void> {
-        return ShopingListRepository().deleteItem(havingID: list.id)
-    }
-    
-    func update(list: ShopingList) -> Observable<Void> {
-        return ShopingListRepository().update(list)
+    func search(query: String, tags: [SearchTag]) -> Observable<[RecipeType]> {
+        let request = SearchRequest(query: query, tags: tags)
+        return HomeRepositoy().search(input: request).map { $0 as [RecipeType] }
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-typealias ShopingListSectionModel =  SectionModel<String, ShortIngredient>
+typealias ShopingListSectionModel = SectionModel<ShopingList, ShortIngredient>
 
 struct ShopingListViewModel {
     let navigator: ShopingListNavigatorType
@@ -21,6 +21,8 @@ extension ShopingListViewModel: ViewModelType {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
         let selectedTrigger: Driver<IndexPath>
+        let selectedTitleTrigger: Driver<RecipeType>
+        let deleteTrigger: Driver<ShopingList>
     }
     
     struct Output {
@@ -29,6 +31,8 @@ extension ShopingListViewModel: ViewModelType {
         let isReloading: Driver<Bool>
         let error: Driver<Error>
         let selected: Driver<Void>
+        let selectedTitle: Driver<Void>
+        let deleted: Driver<Void>
     }
     
     func transform(_ input: ShopingListViewModel.Input) -> ShopingListViewModel.Output {
@@ -43,7 +47,7 @@ extension ShopingListViewModel: ViewModelType {
                     .trackError(error)
         }
         let lists = getRecipe.item.map { list in
-            list.map { ShopingListSectionModel(model: $0.title, items: $0.ingredients) }
+            list.map { ShopingListSectionModel(model: $0, items: $0.ingredients) }
         }
         
         let selected = input.selectedTrigger.withLatestFrom(getRecipe.item) { (index, lists) -> (Int, ShopingList) in
@@ -57,12 +61,30 @@ extension ShopingListViewModel: ViewModelType {
             return self.useCase.update(list: list).asDriverOnErrorJustComplete()
         }
         
+        let selectedTitle = input.selectedTitleTrigger.do(onNext: { recipe in
+            self.navigator.toInformation(recipe: recipe)
+        }).mapToVoid()
+        
+        let deleted = input.deleteTrigger.flatMapLatest {
+            self.navigator
+                .showDeletionConfirm(list: $0)
+                .trackError(error)
+                .asDriverOnErrorJustComplete()
+        }.flatMapLatest {
+            self.useCase
+                .remove(list: $0)
+                .trackError(error)
+                .asDriverOnErrorJustComplete()
+        }
+        
         return Output(
             data: lists,
             isLoading: getRecipe.isLoading,
             isReloading: getRecipe.isReloading,
             error: error.asDriver(),
-            selected: selected
+            selected: selected,
+            selectedTitle: selectedTitle,
+            deleted: deleted
         )
     }
 }
